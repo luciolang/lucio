@@ -1,7 +1,7 @@
 # Lucio
 
 ## What?
-Lucio is a Lisp-like language and also a parser developed in Ruby only for knowledge and fun. No profit intended.
+Lucio is **intended to be** a Lisp-like language and also a parser developed in Ruby only for knowledge and fun. No profit intended.
 
 ## Why?
 From Latin, Lucius means _Light_, because this development is enlightening my (poor) knowledge about programming languages, parsing and related subjects.
