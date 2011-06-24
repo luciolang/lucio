@@ -13,3 +13,10 @@ Lucio is developed in my almost nonexistent spare time as a way to keep me learn
 
 ## Who?
 I'm just an ordinary software developer, passionate and curious. If you want to collaborate, fork this and start to code. Simple.
+
+## Small sample
+    / (* (+ 1 2) (+3 4)) 2
+    => 11.5
+
+    (eql? (* (+ 1 2) 3) 9)
+    => true
