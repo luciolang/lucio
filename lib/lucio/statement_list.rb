@@ -15,8 +15,11 @@ module Lucio
     end
 
     def size
-      puts "#{@list.inspect}"
       @list.size
+    end
+
+    def to_s
+      "#{super.to_s}: #{@list.inspect}"
     end
   end
 end
