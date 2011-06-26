@@ -1,0 +1,85 @@
+grammar Lucio
+
+  rule lucio
+    (list)*
+  end
+
+  rule list
+    '(' operator? (list / space / number / string / boolean / null)* ')'
+  end
+
+  rule operator
+    ([a-zA-Z] [a-zA-Z0-9]*) / '+' / '-' / '/' / '*'
+  end
+
+  rule number
+    decimal / integer
+  end
+
+	rule decimal
+		integer '.' [0-9]+ {
+			def value
+				text_value.to_f
+			end
+		}
+	end
+
+	rule integer
+		'-'? unsigned_integer {
+			def value
+				text_value.to_i
+			end
+		}
+	end
+
+	rule unsigned_integer
+		('0' / [1-9] [0-9]*)
+	end
+
+  rule string
+    '"' [^"]* '"' {
+      def content
+        elements[1].text_value
+      end
+    }
+  end
+
+# '
+
+  rule boolean
+    (true / false)
+  end
+
+  rule true
+    'true' {
+      def content
+        true
+      end
+    }
+  end
+
+  rule false
+    ('false' space?) {
+      def content
+        false
+      end
+    }
+  end
+
+  rule null
+    'null' {
+      def content
+        nil
+      end
+    }
+  end
+
+  rule space
+    [ ]+ {
+      def content
+        ' '
+      end
+    }
+  end
+end
+

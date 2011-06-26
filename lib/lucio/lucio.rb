@@ -1,5 +1,4 @@
 require 'lucio/statement_list'
-require 'lucio/parser'
 require 'lucio/lexicon'
 require 'lucio/runner'
 
@@ -16,3 +15,4 @@ module Lucio
     [list[0], list.drop(1)]
   end
 end
+
