@@ -5,7 +5,9 @@ Lucio is **intended to be** a Lisp-like language and also a parser developed in 
 
 ## Why?
 From Latin, Lucius means _Light_, because this development is enlightening my (poor) knowledge about programming languages, parsing and related subjects.
+
 Lucio is also the name of one of the most important teachers I had, and I found this as a kind of homage.
+
 The last, but not least, reason is to practice TDD, since I'm developing all the code using test-first.
 
 ## When?
@@ -28,7 +30,9 @@ Lucio **tem a intenção de ser** um dialeto Lisp e também um interpretador des
 
 ## Por que?
 Em Latim, Lucius significa _Luz_, ou _Iluminação_, porque esse projeto está iluminando meu (pobre) conhecimento sobre linguagens de programação, interpretadores e assuntos relacionados.
+
 Lucio é também o nome de um dos mais importantes professores que já tive, e encontrei nesse projeto uma forma de homenageá-lo.
+
 O último motivo, mas não menos importante, é poder praticar TDD, partindo do princípio que estou desenvolvendo **todo** o código utilizando essa metodologia.
 
 ## Quando?
