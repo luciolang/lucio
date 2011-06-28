@@ -27,6 +27,6 @@
 (eql? (+ 1 2) 3)
 |
 +--> runner: eql? (lista) 3                            +-> eql? 3 3 -> true
-                  |                                    |
-                  +-----> runner + 1 2 --> returns 3 --+
+                      |                                    |
+                      +-----> runner + 1 2 --> returns 3 --+
 </pre>
