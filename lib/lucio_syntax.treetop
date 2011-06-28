@@ -9,7 +9,7 @@ grammar Lucio
   end
 
   rule operator
-    ([a-zA-Z] [a-zA-Z0-9]*) / '+' / '-' / '/' / '*'
+    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*'
   end
 
   rule number
@@ -59,7 +59,7 @@ grammar Lucio
   end
 
   rule false
-    ('false' space?) {
+    'false' {
       def content
         false
       end

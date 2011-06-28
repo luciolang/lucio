@@ -40,6 +40,7 @@ describe Lucio do
     end
 
     it 'space' do
+      Lucio.parse('()').should be
       Lucio.parse('( )').should be
       Lucio.parse('(  )').should be
     end
@@ -66,7 +67,19 @@ describe Lucio do
       Lucio.parse('(/ (* (+ 1 2)(+ 3 4)) 2)').should be
     end
 
-	end
+    it 'special caracters should work to improve the expressiveness' do
+      Lucio.parse('(eql? (* (+ 1 2) 3) 9)').should be
+      Lucio.parse('(eql?? (* (+ 1 2) 3) 9)').should_not be
+
+      Lucio.parse('(foo-bar (1 1 2 3 4 4))').should be
+      Lucio.parse('(foo-bar-meh (1 1 2 3 4 4))').should be
+
+      Lucio.parse('(foo--bar (1 1 2 3 4 4))').should_not be
+      Lucio.parse('(foo----- (1 1 2 3 4 4))').should_not be
+      Lucio.parse('(foo--bar-meh (1 1 2 3 4 4))').should_not be
+    end
+  
+  end
 
 end
 
