@@ -1,7 +1,7 @@
 # Lucio (en)
 
 ## What?
-Lucio is **intended to be** a Lisp-like language and also a parser developed in Ruby only for knowledge and fun. No profit intended.
+Lucio is **intended to be** a Lisp-like language developed in Ruby only for knowledge and fun. No profit intended.
 
 ## Why?
 From Latin, Lucius means _Light_, because this development is enlightening my (poor) knowledge about programming languages, parsing and related subjects.
@@ -17,8 +17,8 @@ Lucio is developed in my almost nonexistent spare time as a way to keep me learn
 I'm just an ordinary software developer, passionate and curious. If you want to collaborate, fork this and start to code. Simple.
 
 ## Small sample
-    / (* (+ 1 2) (+3 4)) 2
-    => 11.5
+    (/ (* (+ 1 2) (+3 4)) 2)
+    => 10.5
 
     (eql? (* (+ 1 2) 3) 9)
     => true
@@ -26,7 +26,7 @@ I'm just an ordinary software developer, passionate and curious. If you want to 
 # Lucio (pt\_BR)
 
 ## O que é?
-Lucio **tem a intenção de ser** um dialeto Lisp e também um interpretador desenvolvido em Ruby apenas por diversão e aprendizado, sem qualquer intenção de lucro financeiro.
+Lucio **tem a intenção de ser** um dialeto Lisp desenvolvido inicialmente em Ruby apenas por diversão e aprendizado, sem qualquer intenção de lucro financeiro.
 
 ## Por que?
 Em Latim, Lucius significa _Luz_, ou _Iluminação_, porque esse projeto está iluminando meu (pobre) conhecimento sobre linguagens de programação, interpretadores e assuntos relacionados.
@@ -36,14 +36,14 @@ Lucio é também o nome de um dos mais importantes professores que já tive, e e
 O último motivo, mas não menos importante, é poder praticar TDD, partindo do princípio que estou desenvolvendo **todo** o código utilizando essa metodologia.
 
 ## Quando?
-Lucio está sendo desenvolvido em meu quase inexistente tempo livro como uma forma de me manter sempre aprendendo coisas novas e motivado a continuar desenvolvendo.
+Lucio está sendo desenvolvido em meu quase inexistente tempo livre como uma forma de me manter sempre aprendendo coisas novas e motivado a continuar desenvolvendo.
 
 ## Quem?
 Sou apenas um rapaz latino-americano sem dinheiro no bolso nem amigos importantes, mas que realmente adora o que faz e muito curioso. Se você quiser participar e colaborar, crie um fork e comece a codificar. Simples assim.
 
 ## Exemplo bestinha
-    / (* (+ 1 2) (+3 4)) 2
-    => 11.5
+    (/ (* (+ 1 2) (+3 4)) 2)
+    => 10.5
 
     (eql? (* (+ 1 2) 3) 9)
     => true
