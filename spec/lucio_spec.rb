@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 require 'lucio'
 
 describe Lucio::Runner do

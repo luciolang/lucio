@@ -1,10 +1,12 @@
-require 'lucio/statement_list'
 require 'lucio/lexicon'
 require 'lucio/runner'
+require 'polyglot'
+require 'treetop'
+require 'lucio_syntax'
 
 module Lucio
   def self.parse(str)
-    return Parser.parse str
+    return LucioParser.new.parse str
   end
 
   def self.run(list)
