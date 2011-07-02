@@ -85,9 +85,8 @@ describe Lucio do
 (/
   (*
     (+ 1 2)
-    (+ 3 4)
-  )
-2)
+    (+ 3 4))
+  2)
 lisp
 
       Lucio.parse(code, true).should be
