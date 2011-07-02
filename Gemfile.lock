@@ -1,6 +1,7 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    ZenTest (4.5.0)
     diff-lcs (1.1.2)
     polyglot (0.3.1)
     rspec (2.6.0)
@@ -22,6 +23,8 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  ZenTest
+  diff-lcs
   polyglot
   rspec
   simplecov (>= 0.4.0)

@@ -5,8 +5,13 @@ require 'treetop'
 require 'lucio_syntax'
 
 module Lucio
-  def self.parse(str)
-    return LucioParser.new.parse str
+  def self.parse(str, debug = false)
+    parser = LucioParser.new
+    result = parser.parse str
+
+    puts "\n#{parser.failure_reason}" unless result || !debug
+
+    result
   end
 
   def self.run(list)

@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'lucio'
 
 describe Lucio do
 
@@ -78,7 +79,16 @@ describe Lucio do
       Lucio.parse('(foo----- (1 1 2 3 4 4))').should_not be
       Lucio.parse('(foo--bar-meh (1 1 2 3 4 4))').should_not be
     end
-  
+
+    it 'multiline' do
+      code = '
+(+ 1 1)'
+
+      p code.bytes.to_a
+
+      Lucio.parse(code, true).should be
+    end
+
   end
 
 end

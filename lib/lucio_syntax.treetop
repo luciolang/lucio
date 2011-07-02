@@ -5,7 +5,11 @@ grammar Lucio
   end
 
   rule list
-    '(' operator? (list / space / number / string / boolean / null)* ')'
+    '(' (space / operator / line_break)? (list / space / number / string / boolean / null)* ')'
+  end
+
+  rule line_break
+    [\r\n] / [\n] / [\r]
   end
 
   rule operator
