@@ -9,5 +9,8 @@ gem 'simplecov', '>= 0.4.0', :require => false, :group => :test
 # Include everything needed to run rake, tests, features, etc.
 group :development, :test do
   gem 'rspec'
+  gem 'ZenTest'
+  gem 'diff-lcs'
+  gem 'serialport'
 end
 
