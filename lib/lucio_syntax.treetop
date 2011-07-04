@@ -1,11 +1,39 @@
 grammar Lucio
 
   rule lucio
-    (line_break / space / list)*
+    (line_break / space / list)* {
+      def recurse(elements)
+        elements.map do |e|
+          e.nonterminal? ? recurse(e) : e.content
+        end
+      end
+
+      def content
+        recurse(elements)
+      end
+    }
   end
 
   rule list
-    '(' (space / operator)? (line_break / list / space / number / string / boolean / null)* ')'
+    '(' (space / operator)? (line_break / list / space / number / string / boolean)* ')' {
+      def content
+        elements.map do |e| 
+          begin
+            e.content
+          rescue
+            e.text_value
+          end
+        end
+      end
+    }
+  end
+
+  rule space
+    [ ]+ {
+      def content
+        [:space, text_value]
+      end
+    }
   end
 
   rule line_break
@@ -13,7 +41,11 @@ grammar Lucio
   end
 
   rule operator
-    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*'
+    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*' {
+      def content
+        [:operator, text_value]
+      end
+    }
   end
 
   rule number
@@ -22,68 +54,38 @@ grammar Lucio
 
 	rule decimal
 		integer '.' [0-9]+ {
-			def value
-				text_value.to_f
-			end
-		}
+      def content
+        [:decimal, text_value.to_f]
+      end
+    }
 	end
 
 	rule integer
-		'-'? unsigned_integer {
-			def value
-				text_value.to_i
-			end
-		}
+		'-'? unsigned_integer  {
+      def content
+        [:number, text_value.to_i]
+      end
+    }
 	end
 
 	rule unsigned_integer
-		('0' / [1-9] [0-9]*)
+		'0' / [1-9] [0-9]*
 	end
 
   rule string
-    '"' [^"]* '"' {
-      def content
-        elements[1].text_value
-      end
-    }
+    '"' [^"]* '"'
   end
 
-# '
-
   rule boolean
-    (true / false)
+    true / false
   end
 
   rule true
-    'true' {
-      def content
-        true
-      end
-    }
+    'true'
   end
 
   rule false
-    'false' {
-      def content
-        false
-      end
-    }
+    'false'
   end
 
-  rule null
-    'null' {
-      def content
-        nil
-      end
-    }
-  end
-
-  rule space
-    [ ]+ {
-      def content
-        ' '
-      end
-    }
-  end
 end
-
