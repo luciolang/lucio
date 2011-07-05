@@ -1,51 +1,19 @@
 grammar Lucio
 
   rule lucio
-    (line_break / space / list)* {
-      def recurse(elements)
-        elements.map do |e|
-          e.nonterminal? ? recurse(e) : e.content
-        end
-      end
-
-      def content
-        recurse(elements)
-      end
-    }
+    (space / list)*
   end
 
   rule list
-    '(' (space / operator)? (line_break / list / space / number / string / boolean)* ')' {
-      def content
-        elements.map do |e| 
-          begin
-            e.content
-          rescue
-            e.text_value
-          end
-        end
-      end
-    }
+    '(' (space / operator)? (list / string / number / boolean / space )* ')'
   end
 
   rule space
-    [ ]+ {
-      def content
-        [:space, text_value]
-      end
-    }
-  end
-
-  rule line_break
-    [\r\n] / [\n] / [\r]
+    [ \n\r\t]+
   end
 
   rule operator
-    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*' {
-      def content
-        [:operator, text_value]
-      end
-    }
+    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*'
   end
 
   rule number
@@ -53,19 +21,11 @@ grammar Lucio
   end
 
 	rule decimal
-		integer '.' [0-9]+ {
-      def content
-        [:decimal, text_value.to_f]
-      end
-    }
+		integer '.' [0-9]+
 	end
 
 	rule integer
-		'-'? unsigned_integer  {
-      def content
-        [:number, text_value.to_i]
-      end
-    }
+		'-'? unsigned_integer
 	end
 
 	rule unsigned_integer

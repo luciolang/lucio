@@ -6,10 +6,6 @@ describe Lucio do
   context "list" do
 	  it "integer" do
   	  Lucio.parse('(2)').should be
-
-      parser = LucioParser.new
-      puts ''
-      puts parser.parse('(* 2 (+ 1 2))').content.inspect
 	  end
 
 	  it "integers" do
