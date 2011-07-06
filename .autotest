@@ -1,36 +1,3 @@
-=begin
-require 'serialport'
-
-Autotest.add_hook :all_good do |autotest|
-  puts "all green"
-
-  parameters = {:baud         => 9600,
-                :data_bits    => 8,
-                :stop_bits    => 1,
-                :parity       => SerialPort::NONE,
-                :flow_control => SerialPort::NONE}
-
-  begin
-    puts "opening"
-    
-    sp = SerialPort.new("COM27", {:baud => 9600, :data_bits => 8, :stop_bits => 1, :parity => SerialPort::NONE, :flow_control => SerialPort::NONE})
-    puts "writing"
-    sp.putc "G"
-    puts "reading"
-    puts sp.reads
-    puts "done"
-    
-    sp.close
-    puts "closed"
-
-  rescue
-    puts 'Serial error - wtf?'
-
-  end
-
+Autotest.add_hook(:initialize) do |at|
+  at.add_exception %r{coverage}
 end
-
-Autotest.add_hook :red do |autotest|
-  puts "red"
-end
-=end

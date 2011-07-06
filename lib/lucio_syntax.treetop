@@ -1,15 +1,29 @@
+require 'lucio/grammar'
+
 grammar Lucio
 
   rule lucio
-    (space / list)*
+    (whitespace / list)* <Grammar>
   end
 
   rule list
-    '(' (space / operator)? (list / string / number / boolean / space )* ')'
+    lparen (whitespace / operator)? (list / string / number / boolean / whitespace)* ')'
   end
 
-  rule space
-    [ \n\r\t]+
+  rule lparen
+    '(' {
+      def content
+        [:lparen, '(']
+      end
+    }
+  end
+
+  rule whitespace
+    [ \n\r\t]+ {
+      def content
+        [:whitespace, text_value]
+      end
+    }
   end
 
   rule operator
@@ -20,20 +34,24 @@ grammar Lucio
     decimal / integer
   end
 
-	rule decimal
-		integer '.' [0-9]+
-	end
+  rule decimal
+    integer '.' [0-9]+
+  end
 
-	rule integer
-		'-'? unsigned_integer
-	end
+  rule integer
+    '-'? unsigned_integer
+  end
 
-	rule unsigned_integer
-		'0' / [1-9] [0-9]*
-	end
+  rule unsigned_integer
+    '0' / [1-9] [0-9]*
+  end
 
   rule string
-    '"' [^"]* '"'
+    '"' [^"]* '"' {
+      def content
+        [:whitespace, text_value]
+      end
+    }
   end
 
   rule boolean

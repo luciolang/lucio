@@ -83,7 +83,7 @@ describe Lucio do
   2)
 lisp
 
-      Lucio.parse(code, true).should be
+      Lucio.parse(code).should be
     end
 
   end
