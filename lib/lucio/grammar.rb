@@ -1,29 +1,22 @@
 module Lucio
   class Grammar < Treetop::Runtime::SyntaxNode
     def eval
-      puts '\n---'
-      p elements
-      recur(elements, '')
-      nil
-    end
-
-    def content
-      [:hmmm, 'hein?']
+      make_tree(make_list(elements))
     end
 
     private
-    def recur(el, sp)
-      el.each do |e| 
-        if e.nonterminal? 
-          recur(e.elements, sp + ' ') 
-        else
-          print "#{sp}|#{e.text_value}|"
-          begin
-            p e.content
-          rescue
+      def make_list(el, list = [])
+        el.each do |e|
+          unless e.empty? || e.text_value.strip.empty?
+            if e.nonterminal?
+              list = make_list(e.elements, list)
+            else
+              list << e.text_value
+            end
           end
         end
+        list
       end
-    end
   end
 end
+

@@ -7,7 +7,15 @@ grammar Lucio
   end
 
   rule list
-    lparen (whitespace / operator)? (list / string / number / boolean / whitespace)* ')'
+    lparen (whitespace / operator)? (list / string / number / boolean / whitespace)* rparen
+  end
+
+  rule rparen
+    ')' {
+      def content
+        [:rparen, ')']
+      end
+    }
   end
 
   rule lparen
@@ -27,23 +35,43 @@ grammar Lucio
   end
 
   rule operator
-    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*'
+    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*' {
+      def content
+        [:operator, text_value]
+      end
+    }
   end
 
   rule number
-    decimal / integer
+    decimal / integer {
+      def content
+        [:number, content]
+      end
+    }
   end
 
   rule decimal
-    integer '.' [0-9]+
+    integer '.' [0-9]+ {
+      def content
+        [:decimal, text_value.to_f]
+      end
+    }
   end
 
   rule integer
-    '-'? unsigned_integer
+    '-'? unsigned_integer {
+      def content
+        [:integer, text_value.to_i]
+      end
+    }
   end
 
   rule unsigned_integer
-    '0' / [1-9] [0-9]*
+    '0' / [1-9] [0-9]* {
+      def content
+        [:integer, text_value.to_i]
+      end
+    }
   end
 
   rule string
@@ -53,7 +81,7 @@ grammar Lucio
       end
     }
   end
-
+#'
   rule boolean
     true / false
   end
@@ -67,3 +95,4 @@ grammar Lucio
   end
 
 end
+
