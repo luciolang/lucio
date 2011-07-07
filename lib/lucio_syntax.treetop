@@ -1,89 +1,98 @@
+require 'lucio/grammar'
+
 grammar Lucio
 
   rule lucio
-    (line_break / space / list)*
+    (whitespace / list)* <Grammar>
   end
 
   rule list
-    '(' (space / operator)? (line_break / list / space / number / string / boolean / null)* ')'
+    lparen (whitespace / operator)? (list / string / number / boolean / whitespace)* rparen
   end
 
-  rule line_break
-    [\r\n] / [\n] / [\r]
+  rule rparen
+    ')' {
+      def content
+        [:rparen, ')']
+      end
+    }
+  end
+
+  rule lparen
+    '(' {
+      def content
+        [:lparen, '(']
+      end
+    }
+  end
+
+  rule whitespace
+    [ \n\r\t]+ {
+      def content
+        [:whitespace, text_value]
+      end
+    }
   end
 
   rule operator
-    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*'
+    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*' {
+      def content
+        [:operator, text_value]
+      end
+    }
   end
 
   rule number
-    decimal / integer
+    decimal / integer {
+      def content
+        [:number, content]
+      end
+    }
   end
 
-	rule decimal
-		integer '.' [0-9]+ {
-			def value
-				text_value.to_f
-			end
-		}
-	end
+  rule decimal
+    integer '.' [0-9]+ {
+      def content
+        [:decimal, text_value.to_f]
+      end
+    }
+  end
 
-	rule integer
-		'-'? unsigned_integer {
-			def value
-				text_value.to_i
-			end
-		}
-	end
+  rule integer
+    '-'? unsigned_integer {
+      def content
+        [:integer, text_value.to_i]
+      end
+    }
+  end
 
-	rule unsigned_integer
-		('0' / [1-9] [0-9]*)
-	end
+  rule unsigned_integer
+    '0' / [1-9] [0-9]* {
+      def content
+        [:integer, text_value.to_i]
+      end
+    }
+  end
 
   rule string
     '"' [^"]* '"' {
       def content
-        elements[1].text_value
+        [:whitespace, text_value]
       end
     }
   end
-
-# '
-
+#'
   rule boolean
-    (true / false)
+    true / false
   end
 
   rule true
-    'true' {
-      def content
-        true
-      end
-    }
+    'true'
   end
 
   rule false
-    'false' {
-      def content
-        false
-      end
-    }
+    'false'
   end
 
-  rule null
-    'null' {
-      def content
-        nil
-      end
-    }
-  end
-
-  rule space
-    [ ]+ {
-      def content
-        ' '
-      end
-    }
-  end
 end
 

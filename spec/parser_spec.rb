@@ -1,9 +1,9 @@
 require 'spec_helper'
 require 'lucio'
-
+ 
 describe Lucio do
 
-	context "list" do
+  context "list" do
 	  it "integer" do
   	  Lucio.parse('(2)').should be
 	  end
@@ -32,13 +32,6 @@ describe Lucio do
       Lucio.parse('true').should_not be
   	  Lucio.parse('false').should_not be
 	  end
-
-    it 'null'  do
-      Lucio.parse('(null)').should be
-
-      Lucio.parse('null').should_not be
-      Lucio.parse('nullus').should_not be
-    end
 
     it 'space' do
       Lucio.parse('()').should be
@@ -70,6 +63,7 @@ describe Lucio do
 
     it 'special caracters should work to improve the expressiveness' do
       Lucio.parse('(eql? (* (+ 1 2) 3) 9)').should be
+
       Lucio.parse('(eql?? (* (+ 1 2) 3) 9)').should_not be
 
       Lucio.parse('(foo-bar (1 1 2 3 4 4))').should be
@@ -89,7 +83,7 @@ describe Lucio do
   2)
 lisp
 
-      Lucio.parse(code, true).should be
+      Lucio.parse(code).should be
     end
 
   end
