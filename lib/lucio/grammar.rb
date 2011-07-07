@@ -1,15 +1,10 @@
+require 'lucio'
+
 module Lucio
   class Grammar < Treetop::Runtime::SyntaxNode
     def eval
       tree = make_tree(elements)
-      p case
-        when tree.empty?
-          nil
-        when tree.size == 1
-          Kernel::eval(tree[0])
-        else
-          tree
-      end
+      Lucio::Runner.run(tree)
     end
 
     private

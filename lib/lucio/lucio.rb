@@ -1,3 +1,5 @@
+require 'lucio/runner'
+require 'lucio/lexicon'
 require 'polyglot'
 require 'treetop'
 require 'lucio_syntax'
