@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+
+if ARGV.empty?
+  $LOAD_PATH << (File.expand_path(File.dirname(__FILE__)) + '/../bin')
+  require('repl')
+  Lucio::Repl.run
+else
+  puts 'meh'
+end
