@@ -11,73 +11,55 @@ grammar Lucio
   end
 
   rule rparen
-    ')' {
-      def content
-        [:rparen, ')']
-      end
-    }
+    ')'
   end
 
   rule lparen
-    '(' {
-      def content
-        [:lparen, '(']
-      end
-    }
+    '('
   end
 
   rule whitespace
-    [ \n\r\t]+ {
-      def content
-        [:whitespace, text_value]
-      end
-    }
+    [ \n\r\t]+
   end
 
   rule operator
-    ([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*' {
-      def content
-        [:operator, text_value]
+    (([a-zA-Z] ([-]? [a-zA-Z0-9])* [?]?) / '+' / '-' / '/' / '*') {
+      def value
+        text_value
       end
     }
   end
 
   rule number
     decimal / integer {
-      def content
-        [:number, content]
+      def value
+        f = text_value.to_f
+        i = text_value.to_i
+        (f - i == 0 ? i : f)
       end
     }
   end
 
   rule decimal
     integer '.' [0-9]+ {
-      def content
-        [:decimal, text_value.to_f]
+      def value
+        text_value.to_f
       end
     }
   end
 
   rule integer
-    '-'? unsigned_integer {
-      def content
-        [:integer, text_value.to_i]
-      end
-    }
+    '-'? unsigned_integer
   end
 
   rule unsigned_integer
-    '0' / [1-9] [0-9]* {
-      def content
-        [:integer, text_value.to_i]
-      end
-    }
+    '0' / [1-9] [0-9]*
   end
 
   rule string
     '"' [^"]* '"' {
-      def content
-        [:whitespace, text_value]
+      def value
+        text_value
       end
     }
   end

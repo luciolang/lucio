@@ -14,11 +14,15 @@ module Lucio
 
       def make_list(el, list = [])
         el.each do |e|
-          unless e.empty? || e.text_value.strip.empty?
-            if e.nonterminal?
-              list = make_list(e.elements, list)
-            else
-              list << e.text_value
+          if e.public_methods.include?('value')
+            list << e.value
+          else
+            unless e.empty? || e.text_value.strip.empty?
+              if e.nonterminal?
+                list = make_list(e.elements, list)
+              else
+                list << e.text_value
+              end
             end
           end
         end

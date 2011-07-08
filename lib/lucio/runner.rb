@@ -5,19 +5,27 @@ module Lucio
         when tree.empty?
           nil
         when tree.size == 1
-          Kernel::eval(tree[0])
+          eval(tree[0])
         else
           operator, list = Lucio.behead(tree)
           start, tail = Lucio.behead(list)
-          first = eval(start)
 
-          instruction = Lexicon.get operator
-
-          tail.inject(first) do |result, item| 
-            eval("#{result} + #{eval(item)}")
+          if(start.kind_of? Array)
+            first = run start
+          else
+            first = eval start
           end
 
-          # value = tail.inspect(Kernel::eval(start)){|result, item| p instruction.params(result, item)}
+          tail.inject(first) do |result, item| 
+            if item.kind_of? Array
+              i = run(item)
+            else
+              i = eval(item)
+            end
+
+            instruction = Lexicon.get operator
+            instruction.execute(result, i)
+          end
       end
     end
   end

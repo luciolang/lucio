@@ -11,6 +11,4 @@ group :development, :test do
   gem 'rspec'
   gem 'ZenTest'
   gem 'diff-lcs'
-  gem 'serialport'
 end
-

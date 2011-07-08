@@ -12,7 +12,6 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
-    serialport (1.0.4)
     simplecov (0.4.2)
       simplecov-html (~> 0.4.4)
     simplecov-html (0.4.5)
@@ -28,6 +27,5 @@ DEPENDENCIES
   diff-lcs
   polyglot
   rspec
-  serialport
   simplecov (>= 0.4.0)
   treetop

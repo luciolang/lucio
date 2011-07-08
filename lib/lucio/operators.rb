@@ -1,1 +1,5 @@
-require 'lucio/operators/add'
+require 'lucio/operators/sum'
+require 'lucio/operators/multiplication'
+require 'lucio/operators/division'
+require 'lucio/operators/subtraction'
+require 'lucio/operators/equality'
