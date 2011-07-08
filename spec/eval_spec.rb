@@ -31,6 +31,16 @@ describe Lucio do
     it 'compare two values using a function' do
       Lucio.eval('(eql? (* (+ 1 2) 3) 9)').should be_true
       Lucio.eval('(eql? (/ (* (+ 1 2) (+3 4)) 2) 10)').should be_false
+      Lucio.eval(<<lisp
+(eql? 
+  (/ 
+    (* 
+      (+ 1 2) 
+      (+3 4)) 
+    2) 
+  10)
+lisp
+).should be_false
     end
   end
 end
