@@ -17,20 +17,26 @@ Jeweler::Tasks.new do |gem|
   gem.name = "lucio"
   gem.homepage = "https://github.com/pbalduino/lucio"
   gem.license = "MIT"
-  gem.summary = %Q{Lucio is a LISP-like language}
+  gem.summary = %Q{Lucio is a LISP-like language created just for fun}
   gem.description = %Q{Lucio is intended to be a Lisp-like language developed in Ruby only for knowledge and fun.}
   gem.email = "pbalduino+github@gmail.com"
-  gem.authors = ["Plinio Balduino", "Rodrigo Lorca"]
+  gem.authors = ["pbalduino"]
   # dependencies defined in Gemfile
 end
 Jeweler::RubygemsDotOrgTasks.new
 
-require 'rake/rdoctask'
-Rake::RDocTask.new do |rdoc|
-  version = File.exist?('VERSION') ? File.read('VERSION') : ""
-
-  rdoc.rdoc_dir = 'rdoc'
-  rdoc.title = "lucio #{version}"
-  rdoc.rdoc_files.include('README*')
-  rdoc.rdoc_files.include('lib/**/*.rb')
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec) do |spec|
+  spec.pattern = FileList['spec/**/*_spec.rb']
 end
+
+RSpec::Core::RakeTask.new(:rcov) do |spec|
+  spec.pattern = 'spec/**/*_spec.rb'
+  spec.rcov = true
+end
+
+task :default => :spec
+
+require 'yard'
+YARD::Rake::YardocTask.new
