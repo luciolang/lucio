@@ -5,15 +5,16 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lucio}
-  s.version = "0.0.4"
+  s.version = "0.0.5"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pbalduino"]
   s.date = %q{2011-07-11}
   s.description = %q{Lucio is intended to be a Lisp-like language developed in Ruby only for knowledge and fun.}
   s.email = %q{pbalduino+github@gmail.com}
-  s.executables = ["lucio.bat", "lucio", "repl.rb"]
+  s.executables = ["lucio"]
   s.extra_rdoc_files = [
+    "CHANGELOG.md",
     "LICENSE.txt",
     "README.md"
   ]
@@ -36,9 +37,11 @@ Gem::Specification.new do |s|
     "lib/lucio/lexicon.rb",
     "lib/lucio/lucio.rb",
     "lib/lucio/operators.rb",
+    "lib/lucio/operators/conditional.rb",
     "lib/lucio/operators/division.rb",
     "lib/lucio/operators/equality.rb",
     "lib/lucio/operators/function.rb",
+    "lib/lucio/operators/macro.rb",
     "lib/lucio/operators/multiplication.rb",
     "lib/lucio/operators/subtraction.rb",
     "lib/lucio/operators/sum.rb",
@@ -53,11 +56,10 @@ Gem::Specification.new do |s|
   s.homepage = %q{https://github.com/pbalduino/lucio}
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
+  s.rubygems_version = %q{1.5.2}
   s.summary = %q{Lucio is a LISP-like language created just for fun}
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
