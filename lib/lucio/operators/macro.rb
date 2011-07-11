@@ -1,10 +1,10 @@
 module Lucio
   module Operator
-    class Function
+    class Macro
       attr :type
 
       def initialize
-        @type = :function
+        @type = :macro
       end
 
       def execute(*params)

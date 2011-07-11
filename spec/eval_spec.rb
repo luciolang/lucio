@@ -43,4 +43,46 @@ lisp
 ).should be_false
     end
   end
+
+  context 'macro' do
+    it 'runs a simple if' do
+      Lucio.eval(<<lisp
+(if (eql? 1 1)
+  ("ok"))
+lisp
+).should == 'ok'
+    end
+
+    it 'a simple if without else returns nil when false' do
+      Lucio.eval('(if (eql? 1 2)("nope"))').should == nil
+    end
+
+    it 'runs a if with else' do
+      Lucio.eval(<<lisp
+(if (eql? 1 1)
+  ("ok")
+  ("nope"))
+lisp
+).should == 'ok'
+
+      Lucio.eval(<<lisp
+(if (eql? 2 1)
+  ("nope")
+  ("ok"))
+lisp
+).should == 'ok'
+    end
+
+    it 'runs a function before a macro' do
+      Lucio.eval(<<lisp
+(+ 1 2 3 (if (eql? (+ 1 1) 2) (4) (5)))
+lisp
+).should == 10
+
+      Lucio.eval(<<lisp
+(eql? (+ 1 2 3 (if (eql? (+ 1 1) 2) (4) (5))) 10)
+lisp
+).should be_true
+    end 
+  end
 end

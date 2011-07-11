@@ -10,23 +10,30 @@ module Lucio
           operator, list = Lucio.behead(tree)
           start, tail = Lucio.behead(list)
 
-          if(start.kind_of? Array)
-            first = run start
-          else
-            first = eval start
-          end
+          instruction = Lexicon.get operator
 
-          tail.inject(first) do |result, item| 
-            if item.kind_of? Array
-              i = run(item)
+          if instruction.type == :function
+            if(start.kind_of? Array)
+              first = run start
             else
-              i = eval(item)
+              first = eval start
             end
 
-            instruction = Lexicon.get operator
-            instruction.execute(result, i)
+            tail.inject(first) do |result, item| 
+              if item.kind_of? Array
+                i = run item
+              else
+                i = eval item
+              end
+
+              instruction.execute(result, i)
+            end
+          elsif instruction.type == :macro
+            instruction.execute(list)
+          else
+            puts instruction.type
           end
-      end
+        end
     end
   end
 end

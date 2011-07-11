@@ -14,7 +14,7 @@ module Lucio
 
       def make_list(el, list = [])
         el.each do |e|
-          if e.public_methods.include?('value') || e.public_methods.include?(:value)
+          if e.public_methods.include?('value') || e.public_methods.include?(:value) # 1.9.2 compatibility =(
             list << e.value
           else
             unless e.empty? || e.text_value.strip.empty?

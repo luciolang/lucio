@@ -14,11 +14,12 @@ module Lucio
     private
     def self.fill_operator_list
       @@operator_list = {}
-      @@operator_list['+'] = Operator::Sum.new
-      @@operator_list['*'] = Operator::Multiplication.new
-      @@operator_list['/'] = Operator::Division.new
-      @@operator_list['-'] = Operator::Subtraction.new
+      @@operator_list['+']    = Operator::Sum.new
+      @@operator_list['*']    = Operator::Multiplication.new
+      @@operator_list['/']    = Operator::Division.new
+      @@operator_list['-']    = Operator::Subtraction.new
       @@operator_list['eql?'] = Operator::Equality.new
+      @@operator_list['if']   = Operator::Conditional.new
     end
   end
 end
