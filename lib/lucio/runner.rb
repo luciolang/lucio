@@ -1,39 +1,45 @@
 module Lucio
   class Runner
-    def self.run(tree)
-      case
-        when tree.empty?
-          nil
-        when tree.size == 1
-          eval(tree[0])
-        else
-          operator, list = Lucio.behead(tree)
-          start, tail = Lucio.behead(list)
+    def self.run(obj_tree)
+      tree = obj_tree.tree
 
-          instruction = Lexicon.get operator
+      if obj_tree.evaluable
+        case
+          when tree.empty?
+            nil
+          when tree.size == 1
+            eval(tree[0])
+          else
+            operator, list = Lucio.behead(tree)
+            start, tail = Lucio.behead(list)
 
-          if instruction.type == :function
-            if(start.kind_of? Array)
-              first = run start
-            else
-              first = eval start
-            end
+            instruction = Lexicon.get operator
 
-            tail.inject(first) do |result, item| 
-              if item.kind_of? Array
-                i = run item
+            if instruction.type == :function
+              if(start.kind_of? Array)
+                first = run List.new(start)
               else
-                i = eval item
+                first = eval start
               end
 
-              instruction.execute(result, i)
+              tail.inject(first) do |result, item| 
+                if item.kind_of? Array
+                  i = run List.new(item)
+                else
+                  i = eval item
+                end
+
+                instruction.execute(result, i)
+              end
+            elsif instruction.type == :macro
+              instruction.execute List.new(list)
+            else
+              puts "Unknown instruction type: #{instruction.type}"
             end
-          elsif instruction.type == :macro
-            instruction.execute(list)
-          else
-            puts instruction.type
-          end
         end
+      else
+        obj_tree
+      end
     end
   end
 end

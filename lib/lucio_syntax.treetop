@@ -3,11 +3,15 @@ require 'lucio/grammar'
 grammar Lucio
 
   rule lucio
-    (whitespace / list)* <Grammar>
+    (whitespace / (quote? list))* <Grammar>
   end
 
   rule list
     lparen (whitespace / operator)? (list / string / number / boolean / whitespace)* rparen
+  end
+
+  rule quote
+    '\''
   end
 
   rule rparen
