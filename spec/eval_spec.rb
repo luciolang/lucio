@@ -84,5 +84,24 @@ lisp
 lisp
 ).should be_true
     end 
+
+    it 'runs a macro before a function ' do
+      Lucio.eval(<<lisp
+(if (eql? (+ 1 1) 2) (+ 1 2 3 4) (0))
+lisp
+).should == 10
+
+      Lucio.eval(<<lisp
+(if (eql? (+ 1 1) 2) 
+  (eql? (+ 1 2 3 (4) (5))) 
+  (false))
+lisp
+).should be_true
+    end 
   end
+
+  context 'quoted list' do
+    # Lucio.eval('\'()').to_s.should == '\'()'
+  end
+
 end
