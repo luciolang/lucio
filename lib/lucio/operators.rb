@@ -1,3 +1,5 @@
+require 'lucio/operators/operator'
+
 require 'lucio/operators/sum'
 require 'lucio/operators/multiplication'
 require 'lucio/operators/division'

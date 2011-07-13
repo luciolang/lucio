@@ -7,8 +7,6 @@ module Lucio
     def self.get(operator)
       fill_operator_list unless @@operator_list
       ret = @@operator_list[operator]
-      raise "Invalid or unknown operator: #{operator}" unless ret
-      ret
     end
 
     private

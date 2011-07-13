@@ -8,12 +8,24 @@ module Lucio
           when tree.empty?
             nil
           when tree.size == 1
-            eval(tree[0])
+            item = tree[0]
+            instruction = Lexicon.get item
+            if instruction
+              instruction.execute
+            else
+              begin
+                eval(item)
+              rescue Exception => e
+                raise "Invalid or unknown symbol: #{item}", e.backtrace
+              end
+            end
           else
             operator, list = Lucio.behead(tree)
             start, tail = Lucio.behead(list)
 
             instruction = Lexicon.get operator
+
+            raise "Invalid or unknown operator: #{operator}" unless instruction
 
             if instruction.type == :function
               if(start.kind_of? Array)
@@ -33,8 +45,6 @@ module Lucio
               end
             elsif instruction.type == :macro
               instruction.execute List.new(list)
-            else
-              puts "Unknown instruction type: #{instruction.type}"
             end
         end
       else

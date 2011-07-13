@@ -17,6 +17,10 @@ describe Lucio do
       Lucio.eval('(+ 1 2)').should == 3
       Lucio.eval('(+ 1 2 3 4 5 6)').should == 21
       Lucio.eval('(+ 1 (+ 2 3))').should == 6
+
+      Lucio.eval('(+)').should == 0
+
+      lambda { Lucio.eval('(invalid)') }.should raise_error
     end
   end
 
@@ -101,7 +105,12 @@ lisp
   end
 
   context 'quoted list' do
-    # Lucio.eval('\'()').to_s.should == '\'()'
+
+    it 'a quoted empty list should return an empty list' do
+      Lucio.eval('\'()').to_s.should == '\'()'
+
+    end
+
   end
 
 end
