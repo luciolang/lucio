@@ -34,15 +34,20 @@ module Lucio
                 first = eval start
               end
 
-              tail.inject(first) do |result, item| 
-                if item.kind_of? Array
-                  i = run List.new(item)
-                else
-                  i = eval item
-                end
+              if tail.empty?
+                instruction.execute(first)
+              else
+                tail.inject(first) do |result, item| 
+                  if item.kind_of? Array
+                    i = run List.new(item)
+                  else
+                    i = eval item
+                  end
 
-                instruction.execute(result, i)
+                  instruction.execute(result, i)
+                end
               end
+
             elsif instruction.type == :macro
               instruction.execute List.new(list)
             end

@@ -90,14 +90,14 @@ lisp
     end 
 
     it 'runs a macro before a function ' do
-      Lucio.eval(<<lisp
+      code = <<lisp
 (if (eql? (+ 1 1) 2) (+ 1 2 3 4) (0))
 lisp
-).should == 10
+      Lucio.eval(code).should == 10
 
       Lucio.eval(<<lisp
-(if (eql? (+ 1 1) 2) 
-  (eql? (+ 1 2 3 (4) (5))) 
+(if (eql? (+ 1 1) 2)
+  (eql? (+ 1 2 3 (4) (5)) 15) 
   (false))
 lisp
 ).should be_true

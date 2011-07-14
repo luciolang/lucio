@@ -3,8 +3,7 @@ require 'lucio'
 module Lucio
   class Grammar < Treetop::Runtime::SyntaxNode
     def eval
-      tree = make_tree(elements)
-      Lucio::Runner.run(tree)
+      Lucio::Runner.run make_tree(elements)
     end
 
     private
@@ -13,8 +12,7 @@ module Lucio
         h = nil
         h, x = Lucio.behead(x) if x[0] == '\''
 
-        l = "Lucio::List.new(tree = #{x.inject('') {|x, y| x += "'#{y}',"}.strip.chop.gsub(/'\(',/, '[').gsub(/[,]?'\)'/, ']')}, evaluable = #{!h})";
-        r = Kernel::eval(l)
+        Kernel::eval("Lucio::List.new(tree = #{x.inject('') {|x, y| x += "'#{y}',"}.strip.chop.gsub(/'\(',/, '[').gsub(/[,]?'\)'/, ']')}, evaluable = #{!h})")
       end
 
       def make_list(el, list = [])
