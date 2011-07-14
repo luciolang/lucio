@@ -47,6 +47,18 @@ describe Lucio do
       Lucio.parse('(+ 1 2 3 4)').should be
     end
 
+    it 'long expression with commas' do
+      Lucio.parse('(+ 1, 2, 3, 4)').should be
+    end
+
+    it 'vector' do
+      Lucio.parse('([1 2 3 4 5 6])').should be
+    end
+
+    it 'vector with commas' do
+      Lucio.parse('([1, 2, 3, 4, 5, 6])').should be
+    end
+
     it 'composed expression' do
       Lucio.parse('(+ 1 (* 2 3))').should be
     end

@@ -7,7 +7,11 @@ grammar Lucio
   end
 
   rule list
-    lparen (whitespace / operator)? (list / string / number / boolean / operator / whitespace)* rparen
+    lparen (whitespace / operator)? (value)* rparen
+  end
+
+  rule value
+    list / string / number / boolean / operator / vector / whitespace
   end
 
   rule quote
@@ -23,7 +27,11 @@ grammar Lucio
   end
 
   rule whitespace
-    [ \n\r\t]+
+    [ \n\r\t,]+
+  end
+
+  rule vector
+    '[' (value)* ']'
   end
 
   rule operator
