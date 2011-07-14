@@ -19,6 +19,10 @@ module Lucio
     parse(str).eval
   end
 
+  def self.literal(str)
+    Lucio.eval(str).to_s
+  end
+
   def self.behead(list)
     [list[0], list.drop(1)]
   end

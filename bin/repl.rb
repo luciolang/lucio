@@ -26,10 +26,10 @@ while !exit
     begin
       print '=> '
       p Lucio.eval(command)
-      puts ''
     rescue Exception => msg
       puts "Error: #{msg}"
     end
+    puts ''
   end
 end
 

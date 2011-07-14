@@ -20,8 +20,8 @@ describe Lucio do
   	  Lucio.parse('("this is a text")').should be
 	  end
 
-	  it "invalid string" do
-  	  Lucio.parse('(this is a text)').should_not be
+	  it "valid expression" do
+  	  Lucio.parse('(this is an expression)').should be
 	  end
 
     it "boolean" do
@@ -69,6 +69,7 @@ describe Lucio do
       Lucio.parse('(foo-bar (1 1 2 3 4 4))').should be
       Lucio.parse('(foo-bar-meh (1 1 2 3 4 4))').should be
 
+      Lucio.parse('(foo--bar (1 1 2 3 4 4))').should be_nil
       Lucio.parse('(foo--bar (1 1 2 3 4 4))').should_not be
       Lucio.parse('(foo----- (1 1 2 3 4 4))').should_not be
       Lucio.parse('(foo--bar-meh (1 1 2 3 4 4))').should_not be

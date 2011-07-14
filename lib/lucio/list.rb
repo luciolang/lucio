@@ -12,8 +12,10 @@ module Lucio
     end
 
     private
-    def flat(content = '')
-      '\'()'
+    def flat(list)
+      result = "#{'(' if list.empty?}#{list.inject('(') do |result, item|
+        result += "#{item} "
+      end.chop})"
     end
     
   end

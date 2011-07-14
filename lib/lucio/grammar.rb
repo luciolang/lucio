@@ -19,7 +19,8 @@ module Lucio
 
       def make_list(el, list = [])
         el.each do |e|
-          if e.public_methods.map{|i| i.to_s}.include?('value')
+          methods = e.public_methods.reject{|i| i.to_s.chr != 'v'}.map{|i| i.to_s}.sort
+          if methods.include?('value')
             list << e.value
           else
             unless e.empty? || e.text_value.strip.empty?

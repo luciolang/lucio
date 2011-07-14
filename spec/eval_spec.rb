@@ -107,7 +107,7 @@ lisp
   context 'quoted list' do
 
     it 'a quoted empty list should return an empty list' do
-      Lucio.eval('\'()').to_s.should == '\'()'
+      Lucio.literal("'()").should == '()'
 
     end
 
