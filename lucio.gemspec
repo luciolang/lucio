@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lucio}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pbalduino"]
-  s.date = %q{2011-07-11}
+  s.date = %q{2011-07-14}
   s.description = %q{Lucio is intended to be a Lisp-like language developed in Ruby only for knowledge and fun.}
   s.email = %q{pbalduino+github@gmail.com}
   s.executables = ["lucio"]
