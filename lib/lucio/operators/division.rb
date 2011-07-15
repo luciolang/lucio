@@ -3,7 +3,7 @@ require 'lucio/operators/function'
 module Lucio
   module Operator
     class Division < Function
-      def execute(*items)
+      def execute(lexicon, *items)
         if items.size == 0
           0
         else

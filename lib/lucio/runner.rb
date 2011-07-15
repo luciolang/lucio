@@ -1,6 +1,6 @@
 module Lucio
   class Runner
-    def self.run(obj_tree)
+    def self.run(obj_tree, lexicon = Lexicon.new)
       tree = obj_tree.tree
 
       if obj_tree.evaluable
@@ -9,9 +9,9 @@ module Lucio
             nil
           when tree.size == 1
             item = tree[0]
-            instruction = Lexicon.get item
+            instruction = lexicon.get item
             if instruction
-              instruction.execute
+              instruction.execute lexicon
             else
               begin
                 eval(item)
@@ -23,33 +23,33 @@ module Lucio
             operator, list = Lucio.behead(tree)
             start, tail = Lucio.behead(list)
 
-            instruction = Lexicon.get operator
+            instruction = lexicon.get operator
 
             raise "Invalid or unknown operator: #{operator}" unless instruction
 
             if instruction.type == :function
               if(start.kind_of? Array)
-                first = run List.new(start)
+                first = run List.new(start), lexicon
               else
                 first = eval start
               end
 
               if tail.empty?
-                instruction.execute(first)
+                instruction.execute(lexicon, first)
               else
                 tail.inject(first) do |result, item| 
                   if item.kind_of? Array
-                    i = run List.new(item)
+                    i = run List.new(item), lexicon
                   else
                     i = eval item
                   end
 
-                  instruction.execute(result, i)
+                  instruction.execute(lexicon, result, i)
                 end
               end
 
             elsif instruction.type == :macro
-              instruction.execute List.new(list)
+              instruction.execute lexicon, List.new(list)
             end
         end
       else

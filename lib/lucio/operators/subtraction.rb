@@ -3,7 +3,8 @@ require 'lucio/operators/function'
 module Lucio
   module Operator
     class Subtraction < Function
-      def execute(*items)
+      def execute(lexicon, *items)
+        p lexicon, items
         if items.size == 0
           0
         else

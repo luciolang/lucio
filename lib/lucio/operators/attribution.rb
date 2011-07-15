@@ -1,10 +1,9 @@
-require 'lucio/operators/function'
+require 'lucio/operators/macro'
 
 module Lucio
   module Operator
-    class Equality < Function
+    class Attribution < Macro
       def execute(lexicon, *items)
-        items[0] == items[1]
       end
     end
   end

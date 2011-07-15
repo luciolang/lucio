@@ -1,7 +1,7 @@
 module Lucio
   module Operator
     class Sum < Function
-      def execute(*items)
+      def execute(lexicon, *items)
         if items.size == 0
           0
         else
