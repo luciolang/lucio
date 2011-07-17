@@ -5,14 +5,14 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lucio}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pbalduino"]
-  s.date = %q{2011-07-14}
+  s.date = %q{2011-07-15}
   s.description = %q{Lucio is intended to be a Lisp-like language developed in Ruby only for knowledge and fun.}
   s.email = %q{pbalduino+github@gmail.com}
-  s.executables = ["lucio"]
+  s.executables = ["lucio", "repl.rb"]
   s.extra_rdoc_files = [
     "CHANGELOG.md",
     "LICENSE.txt",
@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
     ".document",
     ".rspec",
     ".rvmrc",
+    "CHANGELOG.md",
     "Gemfile",
     "Gemfile.lock",
     "LICENSE.txt",
@@ -35,23 +36,31 @@ Gem::Specification.new do |s|
     "lib/lucio.rb",
     "lib/lucio/grammar.rb",
     "lib/lucio/lexicon.rb",
+    "lib/lucio/list.rb",
     "lib/lucio/lucio.rb",
     "lib/lucio/operators.rb",
+    "lib/lucio/operators/attribution.rb",
     "lib/lucio/operators/conditional.rb",
     "lib/lucio/operators/division.rb",
     "lib/lucio/operators/equality.rb",
-    "lib/lucio/operators/function.rb",
     "lib/lucio/operators/macro.rb",
     "lib/lucio/operators/multiplication.rb",
+    "lib/lucio/operators/operator.rb",
     "lib/lucio/operators/subtraction.rb",
     "lib/lucio/operators/sum.rb",
     "lib/lucio/runner.rb",
     "lib/lucio_syntax.treetop",
     "lucio.gemspec",
+    "spec/all_the_fun_spec.rb",
+    "spec/division_spec.rb",
     "spec/eval_spec.rb",
     "spec/lucio_spec.rb",
+    "spec/multiplication_spec.rb",
     "spec/parser_spec.rb",
-    "spec/spec_helper.rb"
+    "spec/spec_helper.rb",
+    "spec/subtraction_spec.rb",
+    "spec/sum_spec.rb",
+    "spec/variable_spec.rb"
   ]
   s.homepage = %q{https://github.com/pbalduino/lucio}
   s.licenses = ["MIT"]

@@ -17,5 +17,13 @@ module Lucio
         super.type = :function
       end
     end
+
+    class Macro
+      def initialize
+        super.type = :macro
+      end
+
+    end
+
   end
 end
