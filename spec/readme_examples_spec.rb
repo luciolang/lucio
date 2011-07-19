@@ -7,7 +7,7 @@ describe Lucio do
     end
 
     it 'first example: math' do
-      @lucio.eval('(/ (* (+ 1 2) (+3 4)) 2)').should == 10.5
+      @lucio.eval('(/ (* (+ 1 2) (+ 3 4)) 2)').should == 10.5
     end
 
     it 'second example: eql?' do 
