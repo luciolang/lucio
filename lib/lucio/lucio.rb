@@ -3,6 +3,8 @@ class Lucio
     @lexicon = lexicon
     @lexicon.add_function :+    , lambda{|items| items.reduce(0, :+)}
     @lexicon.add_function :*    , lambda{|items| items.reduce(1, :*)}
+    @lexicon.add_function :-    , lambda{|items| case when items.size == 0; 0; else; head, tail = Lucio.behead(items); tail.empty? ? (head * -1) : tail.inject(head) {|subtraction, item| subtraction -= item}; end}
+    @lexicon.add_function :/    , lambda{|items| case when items.size == 0; raise 'expects at least 1 arguments, given 0'; when items.size == 1; 1.0 / items[0]; else items.reduce{|result, item| result = result / item.to_f}; end}
     @lexicon.add_function :true , lambda{ true }
     @lexicon.add_function :false, lambda{ false }
     @lexicon.add_function :eql? , lambda{|items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
