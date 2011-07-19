@@ -6,34 +6,32 @@ require 'lucio'
 
 QUIT = '.q'
 
-module Lucio
-  class Repl
-    def self.run
-exit = false
-
-puts <<lisp
+class Repl
+  def self.run
+    @lucio = Lucio.new
+    exit = false
+    puts <<lisp
 # lucio interactive console
 -------------------------
 # type a lucio expression and press ENTER
 # type .q and press ENTER to exit
 
 lisp
-while !exit
-  print 'lucio: '
-  command = (gets).chomp
-  exit = (command == QUIT)
-  unless exit
-    begin
-      print '=> '
-      p Lucio.eval(command)
-    rescue Exception => msg
-      puts "Error: #{msg}"
+    while !exit
+      print 'lucio: '
+      command = (gets).chomp
+      exit = (command == QUIT)
+      unless exit
+        begin
+          print '=> '
+          p @lucio.eval(command)
+        rescue Exception => msg
+          puts "Error: #{msg}"
+        end
+        puts ''
+      end
     end
-    puts ''
-  end
-end
 
-puts '# bye!'
-    end
+    puts '# bye!'
   end
 end
