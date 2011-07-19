@@ -1,5 +1,5 @@
 require 'simplecov'
+SimpleCov.start
+
 require 'rspec'
 require 'lucio'
-
-SimpleCov.start

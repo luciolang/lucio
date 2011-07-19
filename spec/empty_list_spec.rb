@@ -14,8 +14,8 @@ describe Lucio do
       @lucio.eval('()()').should be_nil
     end
 
-    it 'given nested lists should return nil' do
-      @lucio.eval('(())').should be_nil
+    it 'given nested lists should raise error' do
+      lambda {@lucio.eval('(())') }.should raise_error
     end
 
   end
