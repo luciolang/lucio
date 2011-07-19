@@ -17,19 +17,19 @@ Lucio is developed in my almost nonexistent spare time as a way to keep me learn
 I'm just an ordinary software developer, passionate and curious. If you want to collaborate, fork this and start to code. Simple.
 
 ## Small sample
-    (/ (* (+ 1 2) (+3 4)) 2)
+    (/ (* (+ 1 2) (+ 3 4)) 2)
     => 10.5
 
     (eql? (* (+ 1 2) 3) 9)
     => true
 
-    (if (eql? 10.5 (/ (* (+ 1 2) (+3 4)) 2))
+    (if (eql? 10.5 (/ (* (+ 1 2) (+ 3 4)) 2))
       ("great"))
     => "great"
 
-    (if (eql? 0 (/ (* (+ 1 2) (+3 4)) 2))
+    (if (eql? 0 (/ (* (+ 1 2) (+ 3 4)) 2))
       ("great")
-      ("ouch")
+      ("ouch"))
     => "ouch"
 
 # Lucio (pt\_BR)
@@ -51,17 +51,17 @@ Lucio está sendo desenvolvido em meu quase inexistente tempo livre como uma for
 Sou apenas um rapaz latino-americano sem dinheiro no bolso nem amigos importantes, mas que realmente adora o que faz e muito curioso. Se você quiser participar e colaborar, crie um fork e comece a codificar. Simples assim.
 
 ## Exemplos simples
-    (/ (* (+ 1 2) (+3 4)) 2)
+    (/ (* (+ 1 2) (+ 3 4)) 2)
     => 10.5
 
     (eql? (* (+ 1 2) 3) 9)
     => true
 
-    (if (eql? 10.5 (/ (* (+ 1 2) (+3 4)) 2))
+    (if (eql? 10.5 (/ (* (+ 1 2) (+ 3 4)) 2))
       ("great"))
     => "great"
 
-    (if (eql? 0 (/ (* (+ 1 2) (+3 4)) 2))
+    (if (eql? 0 (/ (* (+ 1 2) (+ 3 4)) 2))
       ("great")
-      ("ouch")
+      ("ouch"))
     => "ouch"
