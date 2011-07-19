@@ -9,6 +9,7 @@ class Lucio
     @lexicon.add_function :false, lambda{ false }
     @lexicon.add_function :eql? , lambda{|items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
     @lexicon.add_macro    :let  , lambda{|lexicon, items| lexicon.add_function(items[0].to_sym, lambda{(items[1].kind_of? Array) ? evaluate_tree(items[1]) : items[1]})}
+    @lexicon.add_macro    :if   , lambda{|lexicon, items| evaluate_tree(items[0]) ? evaluate_tree(items[1]) : evaluate_tree(items[2]) }
   end
 
   def eval(source_code)
@@ -22,23 +23,28 @@ class Lucio
   def evaluate_tree(tree)
     unless tree.empty?
       operator, list = Lucio.behead tree
-      instruction = @lexicon.get operator
+      
+      if operator.kind_of? Symbol
+        instruction = @lexicon.get operator
 
-      if instruction
-        if instruction[:type] == :function
-          list.map! {|item| (item.kind_of? Array) ? item = evaluate_tree(item) : item}
-          list.map! {|item| (item.kind_of? Symbol) ? item = @lexicon.get(item)[:code].call : item}
+        if instruction
+          if instruction[:type] == :function
+            list.map! {|item| (item.kind_of? Array) ? item = evaluate_tree(item) : item}
+            list.map! {|item| (item.kind_of? Symbol) ? item = @lexicon.get(item)[:code].call : item}
 
-          instruction[:code].call list
+            instruction[:code].call list
+
+            elsif instruction[:type] == :macro
+            instruction[:code].call @lexicon, list
+
+          end
 
         else
-          instruction[:code].call @lexicon, list
+          raise UnboundSymbolException.new "Unbound symbol #{operator.to_s}"
 
         end
-
       else
-        raise UnboundSymbolException.new "Unbound symbol #{operator.to_s}"
-
+        operator
       end
 
     end

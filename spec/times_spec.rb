@@ -14,11 +14,11 @@ describe Lucio do
       @lucio.eval('(* 3)').should == 3
     end
 
-    it 'with two values should return the sum' do
+    it 'with two values should return the multiplication' do
       @lucio.eval('(* 3 5)').should == 15
     end
 
-    it 'with nested lists should eval the list before return the sum' do
+    it 'with nested lists should eval the list before return the multiplication' do
       @lucio.eval('(* 3 (* 3 2))').should == 18
     end
 
