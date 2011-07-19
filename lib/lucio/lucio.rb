@@ -24,7 +24,7 @@ class Lucio
     unless tree.empty?
       operator, list = Lucio.behead tree
       
-      if operator.kind_of? Symbol
+      if operator.kind_of?(Symbol) || operator.kind_of?(Array)
         instruction = @lexicon.get operator
 
         if instruction

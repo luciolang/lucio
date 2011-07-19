@@ -17,7 +17,7 @@ describe Lucio do
     it 'third example: if' do
       @lucio.eval('
 (if (eql? 10.5 (/ (* (+ 1 2) (+ 3 4)) 2))
-    ("great"))').should == "\"great\""
+    ("great"))').should == 'great'
     end
 
     it 'fourth example: if else' do
@@ -26,7 +26,7 @@ describe Lucio do
   ("great")
   ("ouch"))'
 
-      @lucio.eval(code).should == "\"ouch\""
+      @lucio.eval(code).should == 'ouch'
     end
   end
 end
