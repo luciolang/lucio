@@ -1,14 +1,12 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    ZenTest (4.5.0)
     diff-lcs (1.1.2)
     git (1.2.5)
     jeweler (1.6.4)
       bundler (~> 1.0)
       git (>= 1.2.5)
       rake
-    polyglot (0.3.1)
     rake (0.9.2)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
@@ -21,21 +19,15 @@ GEM
     simplecov (0.4.2)
       simplecov-html (~> 0.4.4)
     simplecov-html (0.4.5)
-    treetop (1.4.9)
-      polyglot (>= 0.3.1)
-    yard (0.6.8)
+    sparse (0.0.2)
 
 PLATFORMS
   ruby
   x86-mingw32
 
 DEPENDENCIES
-  ZenTest
   bundler (~> 1.0.0)
-  diff-lcs
   jeweler (~> 1.6.4)
-  polyglot
   rspec
-  simplecov (>= 0.4.0)
-  treetop
-  yard (~> 0.6.0)
+  simplecov (~> 0.4.0)
+  sparse

@@ -1,17 +1,12 @@
 source "http://rubygems.org"
 
-gem 'polyglot'
-gem 'treetop'
-
-gem 'simplecov', '>= 0.4.0', :require => false, :group => :test
+gem 'sparse', '~> 0.0.3'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.
 group :development, :test do
   gem 'rspec'
-  gem 'ZenTest'
-  gem 'diff-lcs'
-  gem "yard", "~> 0.6.0"
-  gem "bundler", "~> 1.0.0"
-  gem "jeweler", "~> 1.6.4"
+  gem "bundler", "~> 1.0.0", :require => false
+  gem "jeweler", "~> 1.6.4", :require => false
+  gem 'simplecov', '~> 0.4.0', :require => false
 end

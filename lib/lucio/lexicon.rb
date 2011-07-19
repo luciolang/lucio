@@ -1,23 +1,17 @@
-require 'lucio/operators'
+class Lexicon
+  def initialize
+    @operator_list = {}
+  end
 
-module Lucio
-  class Lexicon
-    @@operator_list = nil
+  def add_function(token, code)
+    @operator_list[token] = {:type => :function, :code => code}
+  end
 
-    def self.get(operator)
-      fill_operator_list unless @@operator_list
-      ret = @@operator_list[operator]
-    end
+  def add_macro(token, code)
+    @operator_list[token] = {:type => :macro, :code => code}
+  end
 
-    private
-    def self.fill_operator_list
-      @@operator_list = {}
-      @@operator_list['+']    = Operator::Sum.new
-      @@operator_list['*']    = Operator::Multiplication.new
-      @@operator_list['/']    = Operator::Division.new
-      @@operator_list['-']    = Operator::Subtraction.new
-      @@operator_list['eql?'] = Operator::Equality.new
-      @@operator_list['if']   = Operator::Conditional.new
-    end
+  def get(operator)
+    @operator_list[operator]
   end
 end

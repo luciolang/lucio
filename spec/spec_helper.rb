@@ -1,3 +1,5 @@
 require 'simplecov'
+SimpleCov.start
 
-SimpleCov.start # if ENV['COVERAGE']
+require 'rspec'
+require 'lucio'
