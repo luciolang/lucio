@@ -8,8 +8,9 @@ class Lucio
     @lexicon.add_function :true , lambda{ true }
     @lexicon.add_function :false, lambda{ false }
     @lexicon.add_function :eql? , lambda{|items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
-    @lexicon.add_macro    :let  , lambda{|lexicon, items| lexicon.add_function(items[0].to_sym, lambda{(items[1].kind_of? Array) ? evaluate_tree(items[1]) : items[1]})}
+    @lexicon.add_macro    :let  , lambda{|lexicon, items| lexicon.add_function(items[0].to_sym, lambda{|it| (items[1].kind_of? Array) ? evaluate_tree(it.empty? ? items[1] : items[1] + [it]) : items[1]})}
     @lexicon.add_macro    :if   , lambda{|lexicon, items| evaluate_tree(items[0]) ? evaluate_tree(items[1]) : evaluate_tree(items[2]) }
+    @lexicon.add_macro    :fn   , lambda{|lexicon, items| create_function items }
   end
 
   def eval(source_code)
@@ -30,11 +31,25 @@ class Lucio
         if instruction
           if instruction[:type] == :function
             list.map! {|item| (item.kind_of? Array) ? item = evaluate_tree(item) : item}
-            list.map! {|item| (item.kind_of? Symbol) ? item = @lexicon.get(item)[:code].call : item}
+            list.map! do |item| 
+              if item.kind_of? Symbol
+                op = @lexicon.get item
+                if op.nil?
+                  raise UnboundSymbolException.new("Unbound symbol #{item.to_s}")
+                end
+                item = op[:code].call [] 
+              else
+                item
+              end
+            end
 
-            instruction[:code].call list
+            begin
+              instruction[:code].call list
+            rescue ArgumentError
+              instruction[:code].call
+            end
 
-            elsif instruction[:type] == :macro
+          elsif instruction[:type] == :macro
             instruction[:code].call @lexicon, list
 
           end
@@ -53,6 +68,15 @@ class Lucio
   def self.behead(list)
     [list[0], list.drop(1)]
   end
+
+  def create_function(items)
+    (0 .. items[0].size).each do |i|
+      items[1].map!{|item| item == items[0][i] ? items[2][i] : item}
+    end
+
+    evaluate_tree(items[1])
+  end
+
 end
 
 class UnboundSymbolException < Exception
