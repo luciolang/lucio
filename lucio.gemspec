@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{lucio}
-  s.version = "0.0.7"
+  s.version = "0.0.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["pbalduino"]
-  s.date = %q{2011-07-15}
+  s.date = %q{2011-07-19}
   s.description = %q{Lucio is intended to be a Lisp-like language developed in Ruby only for knowledge and fun.}
   s.email = %q{pbalduino+github@gmail.com}
   s.executables = ["lucio", "repl.rb"]
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
     "README.md"
   ]
   s.files = [
-    ".autotest",
     ".document",
     ".rspec",
     ".rvmrc",
@@ -29,38 +28,23 @@ Gem::Specification.new do |s|
     "LICENSE.txt",
     "README.md",
     "Rakefile",
-    "TODO.md",
     "VERSION",
     "bin/lucio",
     "bin/repl.rb",
     "lib/lucio.rb",
-    "lib/lucio/grammar.rb",
     "lib/lucio/lexicon.rb",
-    "lib/lucio/list.rb",
     "lib/lucio/lucio.rb",
-    "lib/lucio/operators.rb",
-    "lib/lucio/operators/attribution.rb",
-    "lib/lucio/operators/conditional.rb",
-    "lib/lucio/operators/division.rb",
-    "lib/lucio/operators/equality.rb",
-    "lib/lucio/operators/macro.rb",
-    "lib/lucio/operators/multiplication.rb",
-    "lib/lucio/operators/operator.rb",
-    "lib/lucio/operators/subtraction.rb",
-    "lib/lucio/operators/sum.rb",
-    "lib/lucio/runner.rb",
-    "lib/lucio_syntax.treetop",
     "lucio.gemspec",
-    "spec/all_the_fun_spec.rb",
-    "spec/division_spec.rb",
-    "spec/eval_spec.rb",
-    "spec/lucio_spec.rb",
-    "spec/multiplication_spec.rb",
-    "spec/parser_spec.rb",
+    "spec/add_spec.rb",
+    "spec/behead_spec.rb",
+    "spec/divide_spec.rb",
+    "spec/empty_list_spec.rb",
+    "spec/internal_spec.rb",
+    "spec/let_spec.rb",
+    "spec/minus_spec.rb",
+    "spec/readme_examples_spec.rb",
     "spec/spec_helper.rb",
-    "spec/subtraction_spec.rb",
-    "spec/sum_spec.rb",
-    "spec/variable_spec.rb"
+    "spec/times_spec.rb"
   ]
   s.homepage = %q{https://github.com/pbalduino/lucio}
   s.licenses = ["MIT"]
@@ -72,33 +56,24 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<polyglot>, [">= 0"])
-      s.add_runtime_dependency(%q<treetop>, [">= 0"])
+      s.add_runtime_dependency(%q<sparse>, ["~> 0.0.3"])
       s.add_development_dependency(%q<rspec>, [">= 0"])
-      s.add_development_dependency(%q<ZenTest>, [">= 0"])
-      s.add_development_dependency(%q<diff-lcs>, [">= 0"])
-      s.add_development_dependency(%q<yard>, ["~> 0.6.0"])
       s.add_development_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_development_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_development_dependency(%q<simplecov>, ["~> 0.4.0"])
     else
-      s.add_dependency(%q<polyglot>, [">= 0"])
-      s.add_dependency(%q<treetop>, [">= 0"])
+      s.add_dependency(%q<sparse>, ["~> 0.0.3"])
       s.add_dependency(%q<rspec>, [">= 0"])
-      s.add_dependency(%q<ZenTest>, [">= 0"])
-      s.add_dependency(%q<diff-lcs>, [">= 0"])
-      s.add_dependency(%q<yard>, ["~> 0.6.0"])
       s.add_dependency(%q<bundler>, ["~> 1.0.0"])
       s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+      s.add_dependency(%q<simplecov>, ["~> 0.4.0"])
     end
   else
-    s.add_dependency(%q<polyglot>, [">= 0"])
-    s.add_dependency(%q<treetop>, [">= 0"])
+    s.add_dependency(%q<sparse>, ["~> 0.0.3"])
     s.add_dependency(%q<rspec>, [">= 0"])
-    s.add_dependency(%q<ZenTest>, [">= 0"])
-    s.add_dependency(%q<diff-lcs>, [">= 0"])
-    s.add_dependency(%q<yard>, ["~> 0.6.0"])
     s.add_dependency(%q<bundler>, ["~> 1.0.0"])
     s.add_dependency(%q<jeweler>, ["~> 1.6.4"])
+    s.add_dependency(%q<simplecov>, ["~> 0.4.0"])
   end
 end
 
