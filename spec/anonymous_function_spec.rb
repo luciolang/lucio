@@ -9,7 +9,7 @@ describe Lucio do
     it 'without parameters' do
       code = '
 (let boo 
-  (fn()
+  (fn ()
     (42)))
 (boo)'
       @lucio.eval(code).should == 42
@@ -18,7 +18,7 @@ describe Lucio do
     it 'without parameters with calculation' do
       code = '
 (let foo 
-  (fn()
+  (fn ()
     (* 3 5 7)))
 (foo)'
       @lucio.eval(code).should == 105
@@ -27,10 +27,19 @@ describe Lucio do
     it 'with one parameter' do
       code = '
 (let double
-  (fn(x)
+  (fn (x)
     (* x 2)))
 (double 13)'
       @lucio.eval(code).should == 26
+    end
+
+    it 'with two parameters and calculation' do
+      code = '
+(let product
+  (fn (x y)
+    (* x y)))
+(product 3 5)'
+      @lucio.eval(code).should == 15
     end
 
   end
