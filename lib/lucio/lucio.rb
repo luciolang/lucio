@@ -8,9 +8,11 @@ class Lucio
     @lexicon.add_function :true , lambda{ true }
     @lexicon.add_function :false, lambda{ false }
     @lexicon.add_function :eql? , lambda{|items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
+    @lexicon.add_function :lt   , lambda{|items| items[0] < items[1] }
+
     @lexicon.add_macro    :let  , lambda{|lexicon, items| lexicon.add_function(items[0].to_sym, lambda{|it| (items[1].kind_of? Array) ? evaluate_tree(it.empty? ? items[1] : items[1] + [it]) : items[1]})}
     @lexicon.add_macro    :if   , lambda{|lexicon, items| evaluate_tree(items[0]) ? evaluate_tree(items[1]) : evaluate_tree(items[2]) }
-    @lexicon.add_macro    :fn   , lambda{|lexicon, items| create_function items }
+    @lexicon.add_macro    :fn   , lambda{|lexicon, items| create_function(items) }
   end
 
   def eval(source_code)
@@ -70,11 +72,25 @@ class Lucio
   end
 
   def create_function(items)
-    (0 .. items[0].size).each do |i|
-      items[1].map!{|item| item == items[0][i] ? items[2][i] : item}
+    items[1] = replace_parameters(items[1], items[0], items[2])
+    evaluate_tree(items[1])
+  end
+
+  def replace_parameters(list, variables, values)
+    unless variables.empty?
+      (0 .. (variables.size - 1)).each do |i|
+        list = list.map do |item| 
+          if item.kind_of? Array
+            item = replace_parameters(item, variables, values)
+          else
+            item == variables[i] ? values[i] : item
+          end
+        end
+      end
     end
 
-    evaluate_tree(items[1])
+    list
+
   end
 
 end
