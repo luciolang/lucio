@@ -8,9 +8,9 @@ class Lucio
     @lexicon.add_function :true , lambda{ true }
     @lexicon.add_function :false, lambda{ false }
     @lexicon.add_function :eql? , lambda{|items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
-    @lexicon.add_function :lt   , lambda{|items| items[0] < items[1] }
+    @lexicon.add_function :lt   , lambda{|items| items[0] < items[1]}
 
-    @lexicon.add_macro    :let  , lambda{|lexicon, items| lexicon.add_function(items[0].to_sym, lambda{|it| (items[1].kind_of? Array) ? evaluate_tree(it.empty? ? items[1] : items[1] + [it]) : items[1]})}
+    @lexicon.add_macro    :let  , lambda{|lexicon, items| create_let lexicon, items }
     @lexicon.add_macro    :if   , lambda{|lexicon, items| evaluate_tree(items[0]) ? evaluate_tree(items[1]) : evaluate_tree(items[2]) }
     @lexicon.add_macro    :fn   , lambda{|lexicon, items| create_function(items) }
   end
@@ -45,11 +45,7 @@ class Lucio
               end
             end
 
-            begin
-              instruction[:code].call list
-            rescue ArgumentError
-              instruction[:code].call
-            end
+            instruction[:code].call list
 
           elsif instruction[:type] == :macro
             instruction[:code].call @lexicon, list
@@ -72,8 +68,15 @@ class Lucio
   end
 
   def create_function(items)
-    items[1] = replace_parameters(items[1], items[0], items[2])
-    evaluate_tree(items[1])
+    if items[2]
+      items[1] = replace_parameters(items[1], items[0], items[2])
+    end
+
+    begin
+      evaluate_tree(items[1])
+    rescue UnboundSymbolException => e# problem?
+      items[1]
+    end
   end
 
   def replace_parameters(list, variables, values)
@@ -93,6 +96,17 @@ class Lucio
 
   end
 
+  def create_let(lexicon, items)
+    lmb = lambda do |it| 
+      if items[1].kind_of? Array
+        evaluate_tree(it.empty? ? items[1] : items[1] + [it])
+      else
+        items[1]
+      end
+    end
+
+    lexicon.add_function(items[0].to_sym, lmb)
+  end
 end
 
 class UnboundSymbolException < Exception

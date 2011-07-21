@@ -67,6 +67,23 @@ describe Lucio do
       @lucio.eval(code).should == 120
     end
 =begin
+    it 'currying' do
+      code = '
+(let adder
+  (fn (x)
+    (fn (y)
+      (+ x y))))
+
+(let add5
+  (fn(x)
+    (adder 5)))
+
+(add5 10)'
+      p @lucio.eval code
+
+    end
+=end
+=begin
     it 'with a named function as parameter' do
       code = "
 (let operate
@@ -77,9 +94,13 @@ describe Lucio do
   (fn (x y)
     (+ x y)))
 
-(operate add 2 3)"
+(let add5
+  (fn (x)
+    (add x 5)))
 
-      p @lucio.eval code
+(operate add5 2)"
+
+      p 'result', @lucio.eval(code)
     end
 =end
   end
