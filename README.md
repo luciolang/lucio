@@ -70,11 +70,11 @@ A lista de colaboradores está no final desse arquivo e, espero que continue cre
 
 ## Colaboradores:
 
-* [P Balduino](/pbalduino)
+* [P Balduino](/pbalduino) [@p_balduino](http://twitter.com/p_balduino)
 
-* R Lorca - @lorchaos
+* [R Lorca](/lorchaos) - [@lorchaos](http://twitter.com/lorchaos)
 
-* I Hercowitz - @ihercowitz
+* [I Hercowitz](/ihercowitz) - [@ihercowitz](http://twitter.com/ihercowitz)
 
 ## Agradecimentos de pbalduino:
 
