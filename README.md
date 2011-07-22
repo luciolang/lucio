@@ -68,14 +68,22 @@ A lista de colaboradores está no final desse arquivo e, espero que continue cre
       ("ouch"))
     => "ouch"
 
-Colaboradores:
-- P Balduino - @pbalduino
-- R Lorca - @lorchaos
-- I Hercowitz - @ihercowitz
+## Colaboradores:
 
-Agradecimentos de @pbalduino:
-- Mestre Lúcio, pelo conhecimento e também pelo conhecimento que esse conhecimento trouxe;
-- Minha esposa, pela paciência e apoio;
-- Guy Steele, pelo Scheme, Common Lisp, Java e Javascript;
-- Luciano Siqueira
-- Bruno Jessen
+* [P Balduino](/pbalduino)
+
+* R Lorca - @lorchaos
+
+* I Hercowitz - @ihercowitz
+
+## Agradecimentos de pbalduino:
+
+* Mestre Lúcio, pelo conhecimento e também pelo conhecimento que esse conhecimento trouxe;
+
+* Minha esposa, pela paciência e apoio;
+
+* Guy Steele, pelo Scheme, Common Lisp, Java e Javascript;
+
+* Luciano Siqueira
+
+* Bruno Jessen
