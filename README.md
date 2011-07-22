@@ -14,7 +14,7 @@ The last, but not least, reason is to practice TDD, since I'm developing all the
 Lucio is developed in my almost nonexistent spare time as a way to keep me learning and passionate with software development. 
 
 ## Who?
-I'm just an ordinary software developer, passionate and curious. If you want to collaborate, fork this and start to code. Simple.
+The list of colaborators is in the end of this file, in the Portuguese session.
 
 ## Small sample
     (/ (* (+ 1 2) (+ 3 4)) 2)
@@ -50,6 +50,8 @@ Lucio está sendo desenvolvido em meu quase inexistente tempo livre como uma for
 ## Quem?
 Sou apenas um rapaz latino-americano sem dinheiro no bolso nem amigos importantes, mas que realmente adora o que faz e muito curioso. Se você quiser participar e colaborar, crie um fork e comece a codificar. Simples assim.
 
+A lista de colaboradores está no final desse arquivo e, espero que continue crescendo.
+
 ## Exemplos simples
     (/ (* (+ 1 2) (+ 3 4)) 2)
     => 10.5
@@ -65,3 +67,15 @@ Sou apenas um rapaz latino-americano sem dinheiro no bolso nem amigos importante
       ("great")
       ("ouch"))
     => "ouch"
+
+Colaboradores:
+- P Balduino - @pbalduino
+- R Lorca - @lorchaos
+- I Hercowitz - @ihercowitz
+
+Agradecimentos de @pbalduino:
+- Mestre Lúcio, pelo conhecimento e também pelo conhecimento que esse conhecimento trouxe;
+- Minha esposa, pela paciência e apoio;
+- Guy Steele, pelo Scheme, Common Lisp, Java e Javascript;
+- Luciano Siqueira
+- Bruno Jessen
