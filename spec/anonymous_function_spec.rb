@@ -26,6 +26,20 @@ describe Lucio do
       @lucio.eval(code).should == 23
     end
 
+    it 'execute declaration with two different signatures' do
+      code = '
+(fun 
+ ([] 
+  (42))
+ ([x] 
+  (+ x 12))
+ ([x y] 
+  (* x y)))'
+      @lucio.eval("(#{code})").should == 42
+      @lucio.eval("(#{code} 23)").should == 35
+      @lucio.eval("(#{code} 7 8)").should == 56
+    end
+
 =begin
     it 'without parameters' do
       code = '
