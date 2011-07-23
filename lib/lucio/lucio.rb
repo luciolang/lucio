@@ -4,6 +4,12 @@ class Array
   end
 end
 
+class Object
+  def is_array?
+    kind_of? Array
+  end
+end
+
 class Lucio
   def initialize(lexicon = Lexicon.new)
     @lexicon = lexicon
@@ -17,78 +23,34 @@ class Lucio
     @lexicon.add_function :lt     , lambda{|lexicon, items| items[0] < items[1]}
 
     @lexicon.add_macro    :define , lambda{|lexicon, items| define lexicon, items }
-    @lexicon.add_macro    :if     , lambda{|lexicon, items| evaluate_tree(items[0]) ? evaluate_tree(items[1]) : evaluate_tree(items[2]) }
-    @lexicon.add_macro    :fun    , lambda{|lexicon, items| lexicon.add_function items.to_sym, Function.new(items, lexicon, self) }
+    @lexicon.add_macro    :if     , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : Evaluator.evaluate_tree(items[2], lexicon) }
+    @lexicon.add_macro    :fun    , lambda{|lexicon, items| lexicon.add_function items.to_sym, Function.new(items, lexicon) }
   end
 
   def eval(source_code)
     tree = Sparse.new.parse(source_code)
     ret = nil
-    tree.each {|list| ret = evaluate_tree list}
+    tree.each {|list| ret = Evaluator.evaluate_tree(list, @lexicon)}
     ret
   end
 
   def self.behead(list)
     [list[0], list.drop(1)]
   end
-
-  def evaluate_tree(tree, local_lexicon = Lexicon.new)
-    unless tree.empty?
-      operator, list = Lucio.behead tree
       
-      if operator.kind_of?(Symbol) || operator.kind_of?(Array)
-        operator = evaluate_tree(operator) if operator.kind_of?(Array)
-
-        instruction = (operator.kind_of? Hash) ? operator : @lexicon.get(operator)
-
-        if instruction
-          if instruction[:type] == :function
-            list.map! {|item| (item.kind_of? Array) ? item = evaluate_tree(item) : item}
-            list.map! do |item|
-              if item.kind_of? Symbol
-                op = @lexicon.get item
-                unbound item if op.nil?
-                item = op[:code].call @lexicon, []
-              else
-                item
-              end
-            end
-
-            instruction[:code].call @lexicon, list
-
-          elsif instruction[:type] == :macro
-            instruction[:code].call @lexicon, list
-
-          end
-
-        else
-          unbound operator
-
-        end
-      else
-        operator
-      end
-
-    end
-  end
-
   private
   def define(lexicon, items)
     lmb = lambda do |lexicon, it|
-      if items[1].kind_of? Array
-        evaluate_tree(items[1])
-      elsif items[1].kind_of? Function
-        items[1].call lexicon, it
+      if items[1].is_array?
+        Evaluator.evaluate_tree(items[1], @lexicon)
+#      elsif items[1].is_function?
+#        items[1].call lexicon, it
       else
         items[1]
       end
     end
 
     lexicon.add_function(items[0].to_sym, lmb)
-  end
-
-  def unbound symbol
-    raise UnboundSymbolException.new("Unbound symbol: #{symbol.to_s}")
   end
 end
 
