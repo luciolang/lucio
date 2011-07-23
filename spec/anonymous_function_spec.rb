@@ -6,6 +6,17 @@ describe Lucio do
       @lucio = Lucio.new
     end
 
+    it 'declaration without parameters' do
+      code = '(fun ([] (42)))'
+      lambda {@lucio.eval(code) }.should_not raise_error
+    end
+
+    it 'execute declaration without parameters' do
+      code = '((fun ([] (+ 1 12))))'
+      @lucio.eval(code).should == 13
+    end
+
+=begin
     it 'without parameters' do
       code = '
 (let boo 
@@ -67,6 +78,23 @@ describe Lucio do
       @lucio.eval(code).should == 120
     end
 =begin
+    it 'currying' do
+      code = '
+(let adder
+  (fn (x)
+    (fn (y)
+      (+ x y))))
+
+(let add5
+  (fn(x)
+    (adder 5)))
+
+(add5 10)'
+      p @lucio.eval code
+
+    end
+=end
+=begin
     it 'with a named function as parameter' do
       code = "
 (let operate
@@ -77,9 +105,13 @@ describe Lucio do
   (fn (x y)
     (+ x y)))
 
-(operate add 2 3)"
+(let add5
+  (fn (x)
+    (add x 5)))
 
-      p @lucio.eval code
+(operate add5 2)"
+
+      p 'result', @lucio.eval(code)
     end
 =end
   end
