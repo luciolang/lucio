@@ -14,4 +14,10 @@ class Lexicon
   def get(operator)
     @operator_list[operator]
   end
+
+  def operator_list
+    list = []
+    @operator_list.each{|item| list << item[0] }
+    list
+  end
 end

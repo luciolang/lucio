@@ -6,6 +6,17 @@ describe Lucio do
       @lucio = Lucio.new
     end
 
+    it 'declaration without parameters' do
+      code = '(fun ([] (42)))'
+      lambda {@lucio.eval(code) }.should_not raise_error
+    end
+
+    it 'execute declaration without parameters' do
+      code = '((fun ([] (+ 1 12))))'
+      @lucio.eval(code).should == 13
+    end
+
+=begin
     it 'without parameters' do
       code = '
 (let boo 
