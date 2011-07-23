@@ -27,7 +27,7 @@ class Function
 
     signature = @signatures[list.size]
     if signature
-      list.size.times {|item| local_lexicon.add_function signature[:parameters][item], lambda {|lexicon, items| puts list[item]; list[item]}}
+      list.size.times {|item| local_lexicon.add_function signature[:parameters][item], lambda {|lexicon, items| list[item]}}
 
       Evaluator.evaluate_tree(signature[:code], global_lexicon, local_lexicon)
     else
