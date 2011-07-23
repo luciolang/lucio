@@ -87,3 +87,5 @@ A lista de colaboradores está no final desse arquivo e, espero que continue cre
 * Luciano Siqueira
 
 * Bruno Jessen
+
+* Santiago Nunes
