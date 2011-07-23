@@ -1,11 +1,37 @@
 class Function
-  def initialize(code, lexicon)
-    @code = code
+  def initialize(declaration, lexicon)
+    if declaration.empty? || !declaration.first.is_array? || declaration.first.empty?
+      raise SyntaxError.new 'Expected parameter list'
+    end
+
+    @signatures = {}
+
+    declaration.each do |signature|
+      raise SyntaxError.new 'Expected vector' unless signature.first == :'['
+      parameters = []
+      signature = signature.drop(1)
+      until signature.first == :']'
+        parameters << signature.first
+        signature = signature.drop(1)
+      end
+
+      signature = signature.drop(1)
+
+      @signatures[parameters.size] = {:parameters => parameters, :code => signature.first}
+    end
+
   end
 
   def call(global_lexicon, list)
     local_lexicon = Lexicon.new
-    tree = Lucio.behead(Lucio.behead(@code[0])[1])[1]
-    Evaluator.evaluate_tree(tree[0], global_lexicon, local_lexicon)
+
+    signature = @signatures[list.size]
+    if signature
+      list.size.times {|item| local_lexicon.add_function signature[:parameters][item], lambda {|lexicon, items| puts list[item]; list[item]}}
+
+      Evaluator.evaluate_tree(signature[:code], global_lexicon, local_lexicon)
+    else
+      raise ArgumentError "Unexpected number of parameters: #{list.size}"
+    end
   end
 end

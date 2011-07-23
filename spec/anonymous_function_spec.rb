@@ -6,6 +6,11 @@ describe Lucio do
       @lucio = Lucio.new
     end
 
+    it 'syntax error' do
+      code = '(fun 2)'
+      lambda { @lucio.eval(code) }.should raise_error SyntaxError
+    end
+
     it 'declaration without parameters' do
       code = '(fun ([] (42)))'
       lambda {@lucio.eval(code) }.should_not raise_error
@@ -14,6 +19,11 @@ describe Lucio do
     it 'execute declaration without parameters' do
       code = '((fun ([] (+ 1 12))))'
       @lucio.eval(code).should == 13
+    end
+
+    it 'execute declaration with one parameter' do
+      code = '((fun ([x] (+ x 12))) 11)'
+      @lucio.eval(code).should == 23
     end
 
 =begin

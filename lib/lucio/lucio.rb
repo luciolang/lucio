@@ -35,7 +35,7 @@ class Lucio
   end
 
   def self.behead(list)
-    [list[0], list.drop(1)]
+    [list.first, list.drop(1)]
   end
       
   private
@@ -43,8 +43,6 @@ class Lucio
     lmb = lambda do |lexicon, it|
       if items[1].is_array?
         Evaluator.evaluate_tree(items[1], @lexicon)
-#      elsif items[1].is_function?
-#        items[1].call lexicon, it
       else
         items[1]
       end
