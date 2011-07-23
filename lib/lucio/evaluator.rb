@@ -4,13 +4,13 @@ class Evaluator
       operator, list = Lucio.behead tree
 
       if operator.kind_of?(Symbol) || operator.is_array?
-        operator = evaluate_tree(operator, global_lexicon) if operator.kind_of?(Array)
+        operator = evaluate_tree(operator, global_lexicon) if operator.is_array?
 
         instruction = (operator.kind_of? Hash) ? operator : global_lexicon.get(operator)
 
         if instruction
           if instruction[:type] == :function
-            list.map! {|item| (item.kind_of? Array) ? item = evaluate_tree(item, global_lexicon) : item}
+            list.map! {|item| (item.is_array?) ? item = evaluate_tree(item, global_lexicon) : item}
             list.map! do |item|
               if item.kind_of? Symbol
                 op = global_lexicon.get item
