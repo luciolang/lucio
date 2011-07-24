@@ -31,7 +31,7 @@ class Function
 
       Evaluator.evaluate_tree(signature[:code], global_lexicon, local_lexicon)
     else
-      raise ArgumentError "Unexpected number of parameters: #{list.size}"
+      raise ArgumentError.new "Unexpected number of parameters: #{list.size}"
     end
   end
 end

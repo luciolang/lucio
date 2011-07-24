@@ -8,6 +8,15 @@ class Object
   def is_array?
     kind_of? Array
   end
+
+  def is_hash?
+    kind_of? Hash
+  end
+
+  def is_symbol?
+    kind_of? Symbol
+  end
+
 end
 
 class Lucio
@@ -21,6 +30,7 @@ class Lucio
     @lexicon.add_function :false  , lambda{|lexicon, items| false }
     @lexicon.add_function :eql?   , lambda{|lexicon, items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
     @lexicon.add_function :lt     , lambda{|lexicon, items| items[0] < items[1]}
+    @lexicon.add_function :display, lambda{|lexicon, items| puts ">>>>>>>>>#{items.first}<<<<<<<<<<<<" unless items.empty?}
 
     @lexicon.add_macro    :define , lambda{|lexicon, items| define lexicon, items }
     @lexicon.add_macro    :if     , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : Evaluator.evaluate_tree(items[2], lexicon) }

@@ -40,52 +40,63 @@ describe Lucio do
       @lucio.eval("(#{code} 7 8)").should == 56
     end
 
-=begin
-    it 'without parameters' do
+    it 'should raise ArgumentError if the number of arguments is invalid' do
+      code = '((fun ([] (42))) 1)'
+      lambda {@lucio.eval(code) }.should raise_error ArgumentError
+
+      code = '((fun ([x] (x))))'
+      lambda {@lucio.eval(code) }.should raise_error ArgumentError
+
+    end
+
+    it 'bind function to a symbol' do
       code = '
-(let boo 
-  (fn ()
-    (42)))
-(boo)'
+(define answer (fun ([] (42))))
+(answer)'
       @lucio.eval(code).should == 42
     end
 
-    it 'without parameters with calculation' do
+    it 'bind function with parameter to a symbol' do
       code = '
-(let foo 
-  (fn ()
-    (* 3 5 7)))
-(foo)'
-      @lucio.eval(code).should == 105
+(define double (fun ([x] (* x 2))))
+(double 19)'
+      @lucio.eval(code).should == 38
     end
 
-    it 'with one parameter' do
+    it 'using function as parameter - the ugly way' do
       code = '
-(let double
-  (fn (x)
-    (* x 2)))
-(double 13)'
-      @lucio.eval(code).should == 26
-    end
-
-    it 'with two parameters and calculation' do
-      code = '
-(let product
-  (fn (x y)
-    (* x y)))
-(product 3 5)'
-      @lucio.eval(code).should == 15
-    end
-
-    it 'with two parameters and nested calculation' do
-      code = '
-(let average
-  (fn (x y)
-    (/ (+ x y) 2)))
-(average 3 5)'
+; first function receives another function and two values
+; second function returns the average of two values
+((fun 
+  ([op v1 v2]
+   (op v1 v2))) 
+ (fun
+  ([a b]
+   (/ (+ a b) 2))) 3 5)
+'
       @lucio.eval(code).should == 4
     end
 
+    it 'using function as parameter - the clear way' do
+      code = '
+; first function receives another function and two values
+; second function returns the average of two values
+(define calculate
+  (fun 
+   ([op v1 v2]
+    (op v1 v2))))
+
+(define average
+  (fun
+   ([a b]
+    (/ (+ a b) 2))))
+
+(calculate average 3 5)
+'
+      @lucio.eval(code).should == 4
+    end
+
+=begin
     it 'with recursion' do
       code = '
 (let dec

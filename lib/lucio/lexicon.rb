@@ -14,11 +14,11 @@ class Lexicon
   def get(operator)
     @operator_list[operator]
   end
-
+=begin
   def operator_list
     list = []
     @operator_list.each{|item| list << item[0] }
     list
   end
-
+=end
 end
