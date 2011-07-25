@@ -97,57 +97,10 @@ describe Lucio do
     end
 
 =begin
-    it 'with recursion' do
-      code = '
-(let dec
-  (fn (x)
-    (- x 1)))
-
-(let factorial
-  (fn (x)
-    (if (lt x 2)
-      (1)
-      (* x (factorial (dec x))))))
-
-(factorial 5)'
-      @lucio.eval(code).should == 120
-    end
-=begin
-    it 'currying' do
-      code = '
-(let adder
-  (fn (x)
-    (fn (y)
-      (+ x y))))
-
-(let add5
-  (fn(x)
-    (adder 5)))
-
-(add5 10)'
-      p @lucio.eval code
-
-    end
+ Write tests with
+ - recursion
+ - currying
 =end
-=begin
-    it 'with a named function as parameter' do
-      code = "
-(let operate
-  (fn (operation x y)
-    (operation x y)))
 
-(let add
-  (fn (x y)
-    (+ x y)))
-
-(let add5
-  (fn (x)
-    (add x 5)))
-
-(operate add5 2)"
-
-      p 'result', @lucio.eval(code)
-    end
-=end
   end
 end
