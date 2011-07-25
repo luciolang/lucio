@@ -15,8 +15,7 @@ describe Lucio do
     it 'should not crash' do
       code = '
 (if (eql? 1 2)
-  (crash "whattahell?")
-  ("ok"))'
+  (crash "whattahell?"))'
 
       lambda { @lucio.eval(code) }.should_not raise_error
     end

@@ -35,8 +35,9 @@ class Lucio
     @lexicon.add_function :crash  , lambda{|lexicon, items| raise items.first }
 
     @lexicon.add_macro    :define , lambda{|lexicon, items| define lexicon, items }
-    @lexicon.add_macro    :if     , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : Evaluator.evaluate_tree(items[2], lexicon) }
+    @lexicon.add_macro    :if     , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : (Evaluator.evaluate_tree(items[2], lexicon) if items[2]) }
     @lexicon.add_macro    :fun    , lambda{|lexicon, items| lexicon.add_function items.to_sym, Function.new(items, lexicon) }
+    @lexicon.add_macro    :beware , lambda{|lexicon, items| begin; Evaluator.evaluate_tree(items[0], lexicon); rescue; if items[1]; Evaluator.evaluate_tree(items[1], lexicon); end; end }
   end
 
   def eval(source_code)
