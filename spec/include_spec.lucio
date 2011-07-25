@@ -1,0 +1,4 @@
+(define average
+  (fun
+    ([a b]
+      (/ (+ a b) 2))))
