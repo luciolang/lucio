@@ -13,7 +13,7 @@ describe Lucio do
 
     it 'define a function inside the external file' do
       code = '
-(include "spec/core.lucio")
+(include "spec/include_spec.lucio")
 (average 10 20)      
 '
       @lucio.eval(code).should == 15
