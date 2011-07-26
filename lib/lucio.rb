@@ -1,5 +1,6 @@
 require 'sparse'
 require 'lucio/evaluator'
 require 'lucio/lexicon'
+require 'lucio/macro'
 require 'lucio/function'
 require 'lucio/lucio'

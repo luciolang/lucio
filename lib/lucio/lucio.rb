@@ -22,22 +22,23 @@ end
 class Lucio
   def initialize(lexicon = Lexicon.new)
     @lexicon = lexicon
-    @lexicon.add_function :+      , lambda{|lexicon, items| items.reduce(0, :+)}
-    @lexicon.add_function :*      , lambda{|lexicon, items| items.reduce(1, :*)}
-    @lexicon.add_function :-      , lambda{|lexicon, items| case when items.size == 0; 0; else; head, tail = Lucio.behead(items); tail.empty? ? (head * -1) : tail.inject(head) {|subtraction, item| subtraction -= item}; end}
-    @lexicon.add_function :/      , lambda{|lexicon, items| case when items.size == 0; raise 'expects at least 1 arguments, given 0'; when items.size == 1; 1.0 / items[0]; else items.reduce{|result, item| result = result / item.to_f}; end}
-    @lexicon.add_function :true   , lambda{|lexicon, items| true }
-    @lexicon.add_function :false  , lambda{|lexicon, items| false }
-    @lexicon.add_function :eql?   , lambda{|lexicon, items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
-    @lexicon.add_function :lt     , lambda{|lexicon, items| items[0] < items[1]}
-    @lexicon.add_function :display, lambda{|lexicon, items| puts "#{items.first}" unless items.empty?}
-    @lexicon.add_function :include, lambda{|lexicon, items| source = ''; File.open(items.first, "r") { |infile| while (line = infile.gets); source += line; end; self.eval(source) }}
-    @lexicon.add_function :crash  , lambda{|lexicon, items| raise items.first }
+    @lexicon.add_function :+        , lambda{|lexicon, items| items.reduce(0, :+)}
+    @lexicon.add_function :*        , lambda{|lexicon, items| items.reduce(1, :*)}
+    @lexicon.add_function :-        , lambda{|lexicon, items| case when items.size == 0; 0; else; head, tail = Lucio.behead(items); tail.empty? ? (head * -1) : tail.inject(head) {|subtraction, item| subtraction -= item}; end}
+    @lexicon.add_function :/        , lambda{|lexicon, items| case when items.size == 0; raise 'expects at least 1 arguments, given 0'; when items.size == 1; 1.0 / items[0]; else items.reduce{|result, item| result = result / item.to_f}; end}
+    @lexicon.add_function :true     , lambda{|lexicon, items| true }
+    @lexicon.add_function :false    , lambda{|lexicon, items| false }
+    @lexicon.add_function :eql?     , lambda{|lexicon, items| items.map{|item| item == items[0]}.reduce{|memo, item| memo && item}}
+    @lexicon.add_function :lt       , lambda{|lexicon, items| items[0] < items[1]}
+    @lexicon.add_function :display  , lambda{|lexicon, items| puts "#{items.first}" unless items.empty?}
+    @lexicon.add_function :include  , lambda{|lexicon, items| source = ''; File.open("#{items.first}.lucio", "r") { |infile| while (line = infile.gets); source += line; end; self.eval(source) }}
+    @lexicon.add_function :crash    , lambda{|lexicon, items| raise items.first }
 
-    @lexicon.add_macro    :define , lambda{|lexicon, items| define lexicon, items }
-    @lexicon.add_macro    :if     , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : (Evaluator.evaluate_tree(items[2], lexicon) if items[2]) }
-    @lexicon.add_macro    :fun    , lambda{|lexicon, items| lexicon.add_function items.to_sym, Function.new(items, lexicon) }
-    @lexicon.add_macro    :beware , lambda{|lexicon, items| begin; Evaluator.evaluate_tree(items[0], lexicon); rescue; if items[1]; Evaluator.evaluate_tree(items[1], lexicon); end; end }
+    @lexicon.add_macro    :beware   , lambda{|lexicon, items| begin; Evaluator.evaluate_tree(items[0], lexicon); rescue; if items[1]; Evaluator.evaluate_tree(items[1], lexicon); end; end }
+    @lexicon.add_macro    :define   , lambda{|lexicon, items| define lexicon, items }
+    @lexicon.add_macro    :if       , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : (Evaluator.evaluate_tree(items[2], lexicon) if items[2]) }
+    @lexicon.add_macro    :fun      , lambda{|lexicon, items| lexicon.add_function items.to_sym, Function.new(items, lexicon) }
+    @lexicon.add_macro    :defmacro , lambda{|lexicon, items| h, t = Lucio.behead(items); lexicon.add_macro h, Macro.new(t, lexicon) }
   end
 
   def eval(source_code)
