@@ -1,33 +1,36 @@
 class Evaluator
-  def self.evaluate_tree(tree, global_lexicon, local_lexicon = Lexicon.new)
+  def self.evaluate_tree(tree, lexicon)
+    puts ''
+    p lexicon
     unless tree.empty?
       operator, list = Lucio.behead tree
 
       if operator.is_symbol? || operator.is_array?
-        operator = evaluate_tree(operator, global_lexicon, local_lexicon) if operator.is_array?
+        operator = evaluate_tree(operator, lexicon) if operator.is_array?
 
-        instruction = (operator.is_hash?) ? operator : (local_lexicon.get(operator) || global_lexicon.get(operator))
+        instruction = (operator.is_hash?) ? operator : lexicon.get(operator)
 
         if instruction
           if instruction[:type] == :function
-            list.map! {|item| (item.is_array?) ? item = evaluate_tree(item, global_lexicon, local_lexicon) : item}
+            list.map! {|item| (item.is_array?) ? item = evaluate_tree(item, lexicon) : item}
             list.map! do |item|
               if item.is_symbol?
-                op = (local_lexicon.get item) || (global_lexicon.get item)
+                op = lexicon.get item
                 unbound item if op.nil?
-                item = op[:code].call global_lexicon, []
+                item = op[:code].call lexicon, []
               else
                 item
               end
             end
 
-            result = instruction[:code].call(global_lexicon, list)
+            result = instruction[:code].call lexicon, list
 
-            result.is_hash? && result[:type] == :function ? result[:code].call(global_lexicon, list) : result
+            result.is_hash? && result[:type] == :function ? result[:code].call(lexicon, list) : result
 
           elsif instruction[:type] == :macro
-            result = instruction[:code].call global_lexicon, list
-            result
+            result = instruction[:code].call lexicon, list
+
+            # result.is_array? ? evaluate_tree(result, lexicon) : result
           
           end
 

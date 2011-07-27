@@ -1,3 +1,33 @@
+class LexiconStack
+  def initialize
+    @stack = []
+    begin_scope
+  end
+
+  def begin_scope
+    @stack.push Lexicon.new
+  end
+
+  def end_scope
+    @stack.pop
+  end
+
+  def get(operator)
+    @stack.size.times do |item|
+      op = @stack[(@stack.size - 1) - item].get(operator)
+      return op if op
+    end
+  end
+
+  def add_function(token, code)
+    @stack.last.add_function token, code
+  end
+
+  def add_macro(token, code)
+    @stack.last.add_macro token, code
+  end
+end
+
 class Lexicon
   def initialize
     @operator_list = {}
@@ -14,11 +44,4 @@ class Lexicon
   def get(operator)
     @operator_list[operator]
   end
-=begin
-  def operator_list
-    list = []
-    @operator_list.each{|item| list << item[0] }
-    list
-  end
-=end
 end

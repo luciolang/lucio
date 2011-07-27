@@ -5,7 +5,7 @@ describe Lucio do
     before :each do
       @lucio = Lucio.new
     end
-
+=begin
     it 'simple if implementation' do
       macro = '
 (defmacro my-if
@@ -22,11 +22,49 @@ describe Lucio do
   (true)
   (false))'
       
-      @lucio.eval(macro + code_true)
-      # @lucio.eval(macro + code_true).should be_true
+      @lucio.eval(macro + code_true).should be_true
 
-      # p @lucio.eval(macro + code_false)
-      # @lucio.eval(macro + code_false).should be_false
+      @lucio.eval(macro + code_false).should be_false
     end
+
+    it 'simple if implementation with variable = true' do
+      code = <<-LISP
+(defmacro my-if
+  ([test? truey falsey]
+    `(if test? truey falsey)))
+
+(define x true)
+
+(my-if (x)
+  (true)
+  (false))
+
+LISP
+        @lucio.eval(code).should be_true
+      end
+
+    it 'simple if implementation with variable = false' do
+      code = <<-LISP
+(defmacro my-if
+  ([test? x truey x falsey x]
+    `(display test?)(if test? truey falsey)))
+
+(define x false)
+
+(my-if (x) then
+  ((display "noooooooooo")
+  (true))
+else
+  ((display "yes!")
+  (false))
+end)
+
+LISP
+
+        @lucio.eval(code).should be_false
+
+      end
+=end
   end
+
 end

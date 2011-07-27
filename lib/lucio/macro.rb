@@ -24,15 +24,28 @@ class Macro
     signature = @signatures[list.size] 
     parameters = signature[:parameters]
 
-    result = Array.new(signature[:code][0])
-    
-    p 'b4', result, list, parameters
+    result = replace(list, parameters, Array.new(signature[:code][0]))
 
+    p 'call', result
+
+    result
+
+  end
+
+  def replace(list, parameters, result)
+    puts ''
+    p 'b4', result
     list.size.times do |item|
-      result.map! {|part| p '', item, part, list[item], parameters[item], part == parameters[item], '---'; part == parameters[item] ? list[item] : part}
+      result.map! do |part|
+        if part.is_array?
+          part = replace(list, parameters, part)
+        else
+          part == parameters[item] ? list[item] : part
+        end
+      end
     end
 
     p 'aftr', result
-
+    result
   end
 end

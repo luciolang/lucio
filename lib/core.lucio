@@ -1,0 +1,6 @@
+; Addition operation
+(define +
+  (fun 
+    ([] (0))
+    ([x] (x))
+    ([x y] (send + x y))))

@@ -20,7 +20,7 @@ class Object
 end
 
 class Lucio
-  def initialize(lexicon = Lexicon.new)
+  def initialize(lexicon = LexiconStack.new)
     @lexicon = lexicon
     @lexicon.add_function :+        , lambda{|lexicon, items| items.reduce(0, :+)}
     @lexicon.add_function :*        , lambda{|lexicon, items| items.reduce(1, :*)}
@@ -39,7 +39,10 @@ class Lucio
     @lexicon.add_macro    :if       , lambda{|lexicon, items| Evaluator.evaluate_tree(items[0], lexicon) ? Evaluator.evaluate_tree(items[1], lexicon) : (Evaluator.evaluate_tree(items[2], lexicon) if items[2]) }
     @lexicon.add_macro    :fun      , lambda{|lexicon, items| lexicon.add_function items.to_sym, Function.new(items, lexicon) }
     @lexicon.add_macro    :defmacro , lambda{|lexicon, items| h, t = Lucio.behead(items); lexicon.add_macro h, Macro.new(t, lexicon) }
-  end
+    # @lexicon.add_macro    :send     , lambda{|lexicon, items| p 'items', items, items[1]; p self.eval("(#{items[1].to_s})"); items[1].send(items[0], items[2]) }
+
+    # eval('(include "lib/core")')
+end
 
   def eval(source_code)
     tree = Sparse.new.parse(source_code)
