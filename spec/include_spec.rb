@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Lucio do
-  context 'require' do
+  context 'include macro' do
     before :each do
       @lucio = Lucio.new
     end
@@ -14,10 +14,11 @@ describe Lucio do
     it 'define a function inside the external file' do
       code = '
 (include "spec/include_spec")
-(average 10 20)      
+(average 10 20)
 '
       @lucio.eval(code).should == 15
     end
 
   end
 end
+
