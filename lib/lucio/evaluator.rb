@@ -1,14 +1,11 @@
 class Evaluator
   def self.evaluate_tree(tree, lexicon)
-#    puts ''
-#    p lexicon
     unless tree.empty?
       operator, list = Lucio.behead tree
 
       if operator.is_symbol? || operator.is_array?
         operator = evaluate_tree(operator, lexicon) if operator.is_array?
 
-#        p lexicon
 				instruction = (operator.is_hash?) ? operator : lexicon.get(operator)
 
         if instruction

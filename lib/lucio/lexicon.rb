@@ -13,17 +13,13 @@ class LexiconStack
   end
 
   def get(operator)
-    puts ''
-    puts "stack size: #{@stack.size}"
     @stack.size.times do |item|
-      puts "looking for #{operator} in stack #{(@stack.size - 1) - item}"
       op = @stack[(@stack.size - 1) - item].get(operator)
       if op
-        p 'found', op
         return op
       end
     end
-    puts 'operator not found'
+    nil
   end
 
   def add_function(token, code)

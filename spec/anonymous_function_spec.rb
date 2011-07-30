@@ -96,10 +96,35 @@ describe Lucio do
       @lucio.eval(code).should == 4
     end
 
+    it 'should work with recursion' do
+      code = <<-LISP
+(define factorial
+  (fun
+    ([x]
+      (if (lt x 2)
+        (1)
+        (* x (factorial (- x 1)))))))
+
+(factorial 10)      
+
+LISP
+      @lucio.eval(code).should == 3628800
+    end
 =begin
- Write tests with
- - recursion
- - currying
+    it 'should work with currying' do
+code = <<-LISP
+(define adder
+  (fun ([x]
+    (fun ([y]
+      (+ x y))))))
+
+(display "result:")
+((adder 5) 10)
+
+LISP
+
+      p @lucio.eval(code)
+    end
 =end
 
   end
