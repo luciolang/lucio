@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'sparse', '~> 0.0.3'
+gem 'sparse', '~> 0.0.4'
 
 # Add dependencies to develop your gem here.
 # Include everything needed to run rake, tests, features, etc.

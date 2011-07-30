@@ -22,16 +22,19 @@ class Function
 
   end
 
-  def call(global_lexicon, list)
-    local_lexicon = Lexicon.new
+  def call(lexicon, list)
+    lexicon.begin_scope
 
     signature = @signatures[list.size]
     if signature
-      list.size.times {|item| local_lexicon.add_function signature[:parameters][item], lambda {|lexicon, items| list[item]}}
+      list.size.times {|item| lexicon.add_function signature[:parameters][item], lambda {|lexicon, items| list[item]}}
 
-      Evaluator.evaluate_tree(signature[:code], global_lexicon, local_lexicon)
+      result = Evaluator.evaluate_tree(signature[:code], lexicon)
     else
       raise ArgumentError.new "Unexpected number of parameters: #{list.size}"
     end
+
+    lexicon.end_scope
+    result
   end
 end
