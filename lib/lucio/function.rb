@@ -29,11 +29,12 @@ class Function
     if signature
       list.size.times {|item| lexicon.add_function signature[:parameters][item], lambda {|lexicon, items| list[item]}}
 
-      Evaluator.evaluate_tree(signature[:code], lexicon)
+      result = Evaluator.evaluate_tree(signature[:code], lexicon)
     else
       raise ArgumentError.new "Unexpected number of parameters: #{list.size}"
     end
 
     lexicon.end_scope
+    result
   end
 end

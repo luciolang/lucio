@@ -52,4 +52,3 @@ class Lexicon
     @operator_list[operator]
   end
 end
-
