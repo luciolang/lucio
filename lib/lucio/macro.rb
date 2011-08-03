@@ -1,5 +1,5 @@
 class Macro
-  def initialize(declaration, lexicon)
+  def initialize(declaration)
     @signatures = {}
 
     declaration.each do |signature|
@@ -20,32 +20,24 @@ class Macro
     end
   end
 
-  def call(global_lexicon, list)
+  def call(lexicon, list)
     signature = @signatures[list.size] 
     parameters = signature[:parameters]
+    code = Array.new(signature[:code][0])
 
-    result = replace(list, parameters, Array.new(signature[:code][0]))
+    replaced = replace(list, parameters, code)
 
-    p 'call', result
-
-    result
+    Evaluator.evaluate_tree replaced, lexicon
 
   end
 
   def replace(list, parameters, result)
-    puts ''
-    p 'b4', result
     list.size.times do |item|
       result.map! do |part|
-        if part.is_array?
-          part = replace(list, parameters, part)
-        else
-          part == parameters[item] ? list[item] : part
-        end
+        part = part == parameters[item] ? list[item] : part
       end
     end
 
-    p 'aftr', result
     result
   end
 end

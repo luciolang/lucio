@@ -5,7 +5,7 @@ describe Lucio do
     before :each do
       @lucio = Lucio.new
     end
-=begin
+
     it 'simple if implementation' do
       macro = '
 (defmacro my-if
@@ -21,7 +21,7 @@ describe Lucio do
 (my-if (eql? 1 2)
   (true)
   (false))'
-      
+
       @lucio.eval(macro + code_true).should be_true
 
       @lucio.eval(macro + code_false).should be_false
@@ -46,7 +46,7 @@ LISP
     it 'simple if implementation with variable = false' do
       code = <<-LISP
 (defmacro my-if
-  ([test? x truey x falsey x]
+  ([test? then truey else falsey end]
     `(display test?)(if test? truey falsey)))
 
 (define x false)
@@ -64,7 +64,7 @@ LISP
         @lucio.eval(code).should be_false
 
       end
-=end
+
   end
 
 end
