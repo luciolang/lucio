@@ -1,4 +1,4 @@
-# Lucio (en) <img src="https://secure.travis-ci.org/travis-ci/travis-ci.png?branch=master">
+# Lucio (en) <img src="https://secure.travis-ci.org/pbalduino/lucio.png?branch=master">
 
 ## What?
 Lucio is **intended to be** a Lisp-like language developed in Ruby only for knowledge and fun. No profit intended.
@@ -89,3 +89,5 @@ A lista de colaboradores está no final desse arquivo e, espero que continue cre
 * Bruno Jessen
 
 * Santiago Nunes
+
+  Douglas Campos (/qmx) [@qmx](http://twitter.com/qmx)
