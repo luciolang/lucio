@@ -1,4 +1,4 @@
-# Lucio (en)
+# Lucio (en) <img src="https://secure.travis-ci.org/travis-ci/travis-ci.png?branch=master">
 
 ## What?
 Lucio is **intended to be** a Lisp-like language developed in Ruby only for knowledge and fun. No profit intended.
