@@ -90,4 +90,4 @@ A lista de colaboradores está no final desse arquivo e, espero que continue cre
 
 * Santiago Nunes
 
-  Douglas Campos (/qmx) [@qmx](http://twitter.com/qmx)
+* Douglas Campos (/qmx) [@qmx](http://twitter.com/qmx)
